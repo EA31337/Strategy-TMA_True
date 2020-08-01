@@ -77,7 +77,7 @@ int start()
 
    if (counted_bars < 0) return (-1);
    if (counted_bars > 0) counted_bars--;
-   int intLimit = Bars - counted_bars;
+   int intLimit = Bars - counted_bars - 1;
    double dblTma, dblRange;
    int intBarShift;
 
@@ -88,7 +88,7 @@ int start()
       if ( gintTF == Period() )
       {
          dblRange = iATR( Symbol(), gintTF, eintAtrPeriod, inx+10 );
-         dblTma = calcTma( eintHalfLength, inx );
+         dblTma = calcTma( eintHalfLength, inx, intLimit );
       }
       else
       {
@@ -123,7 +123,7 @@ int start()
 //+------------------------------------------------------------------+
 //| calcTma()                                                        |
 //+------------------------------------------------------------------+
-double calcTma( int intHalfLength, int intShift )
+double calcTma( int intHalfLength, int intShift, int intLimit )
 {
    double dblResult, dblSum, dblSumW;
    int inx, jnx;
@@ -132,7 +132,7 @@ double calcTma( int intHalfLength, int intShift )
    dblSum = dblSumW * Close[intShift];
    jnx = intHalfLength;
 
-   for ( inx = 1, jnx = intHalfLength; inx <= intHalfLength; inx++, jnx-- )
+   for ( inx = 1, jnx = intHalfLength; inx <= intHalfLength && intShift+inx <= intLimit; inx++, jnx-- )
    {
       dblSumW += jnx;
       dblSum += ( jnx * Close[intShift+inx] );
