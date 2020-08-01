@@ -82,15 +82,29 @@ class Stg_TMA_True : public Strategy {
       // Returns false when indicator data is not valid.
       return false;
     }
-    double _value = _indi[CURR][0];
+    double pip_level = _level * Chart().GetPipSize();
     switch (_cmd) {
       case ORDER_TYPE_BUY:
-        // Buy signal.
-        _result = _indi[CURR][0] < _indi[PREV][0];
+        _result = _indi[CURR].value[TMA_TRUE_MAIN] < _indi[CURR].value[TMA_TRUE_LOWER] + pip_level;
+        if (_method != 0) {
+          if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR].value[TMA_TRUE_LOWER];
+          if (METHOD(_method, 1)) _result &= (_indi[CURR].value[TMA_TRUE_LOWER] > _indi[PPREV].value[TMA_TRUE_LOWER]);
+          if (METHOD(_method, 2)) _result &= (_indi[CURR].value[TMA_TRUE_MAIN] > _indi[PPREV].value[TMA_TRUE_MAIN]);
+          if (METHOD(_method, 3)) _result &= (_indi[CURR].value[TMA_TRUE_UPPER] > _indi[PPREV].value[TMA_TRUE_UPPER]);
+          if (METHOD(_method, 4)) _result &= Open[CURR] < _indi[CURR].value[TMA_TRUE_MAIN];
+          if (METHOD(_method, 5)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR].value[TMA_TRUE_MAIN];
+        }
         break;
       case ORDER_TYPE_SELL:
-        // Sell signal.
-        _result = _indi[CURR][0] < _indi[PREV][0];
+        _result = _indi[CURR].value[TMA_TRUE_MAIN] > _indi[CURR].value[TMA_TRUE_UPPER] + pip_level;
+        if (_method != 0) {
+          if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR].value[TMA_TRUE_UPPER];
+          if (METHOD(_method, 1)) _result &= (_indi[CURR].value[TMA_TRUE_LOWER] < _indi[PPREV].value[TMA_TRUE_LOWER]);
+          if (METHOD(_method, 2)) _result &= (_indi[CURR].value[TMA_TRUE_MAIN] < _indi[PPREV].value[TMA_TRUE_MAIN]);
+          if (METHOD(_method, 3)) _result &= (_indi[CURR].value[TMA_TRUE_UPPER] < _indi[PPREV].value[TMA_TRUE_UPPER]);
+          if (METHOD(_method, 4)) _result &= Open[CURR] > _indi[CURR].value[TMA_TRUE_MAIN];
+          if (METHOD(_method, 5)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR].value[TMA_TRUE_MAIN];
+        }
         break;
     }
     return _result;
@@ -100,16 +114,32 @@ class Stg_TMA_True : public Strategy {
    * Gets price limit value for profit take or stop loss.
    */
   float PriceLimit(ENUM_ORDER_TYPE _cmd, ENUM_ORDER_TYPE_VALUE _mode, int _method = 0, float _level = 0.0f) {
-    // Indicator *_indi = Data();
+    Indi_TMA_True *_indi = Data();
     double _trail = _level * Market().GetPipSize();
     // int _bar_count = (int)_level * 10;
     int _direction = Order::OrderDirection(_cmd, _mode);
     double _default_value = Market().GetCloseOffer(_cmd) + _trail * _method * _direction;
     double _result = _default_value;
-    // ENUM_APPLIED_PRICE _ap = _direction > 0 ? PRICE_HIGH : PRICE_LOW;
     switch (_method) {
       case 1:
-        // Trailing stop here.
+        _result = (_direction > 0 ? _indi[CURR].value[TMA_TRUE_UPPER] : _indi[CURR].value[TMA_TRUE_LOWER]) +
+                  _trail * _direction;
+        break;
+      case 2:
+        _result = (_direction > 0 ? _indi[PREV].value[TMA_TRUE_UPPER] : _indi[PREV].value[TMA_TRUE_LOWER]) +
+                  _trail * _direction;
+        break;
+      case 3:
+        _result = (_direction > 0 ? _indi[PPREV].value[TMA_TRUE_UPPER] : _indi[PPREV].value[TMA_TRUE_LOWER]) +
+                  _trail * _direction;
+        break;
+      case 4:
+        _result = (_direction > 0 ? fmax(_indi[PREV].value[TMA_TRUE_UPPER], _indi[PPREV].value[TMA_TRUE_UPPER])
+                                  : fmin(_indi[PREV].value[TMA_TRUE_LOWER], _indi[PPREV].value[TMA_TRUE_LOWER])) +
+                  _trail * _direction;
+        break;
+      case 5:
+        _result = _indi[CURR].value[TMA_TRUE_MAIN] + _trail * _direction;
         break;
     }
     return (float)_result;
