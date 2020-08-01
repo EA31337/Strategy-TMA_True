@@ -4,20 +4,23 @@
  */
 
 // Defines indicator properties.
-#property indicator_separate_window
-#property indicator_buffers 5
+#property indicator_chart_window
+#property indicator_buffers 3
 #property indicator_plots 3
-#property indicator_color1 DeepSkyBlue
-#property indicator_color2 LimeGreen
-#property indicator_color3 Red
-#property indicator_width1 2
-#property indicator_style2 STYLE_DOT
-#property indicator_style3 STYLE_DOT
-#property indicator_level1 50
+#property indicator_color1 DarkGray
+#property indicator_color2 DarkGray
+#property indicator_color3 DarkGray
+#property indicator_width1 1
+#property indicator_width2 1
+#property indicator_width3 1
+#property indicator_style1 STYLE_DOT
+#property indicator_style2 STYLE_SOLID
+#property indicator_style2 STYLE_SOLID
 
 // Includes EA31337 framework.
+#include <EA31337-classes/Draw.mqh>
 #include <EA31337-classes/Indicator.mqh>
-//#include <EA31337-classes/Indicators/Indi_MA.mqh>
+#include <EA31337-classes/Indicators/Indi_ATR.mqh>
 
 // Defines macros.
 #define Bars (Chart::iBars(_Symbol, _Period))
