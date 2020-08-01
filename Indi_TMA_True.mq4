@@ -55,7 +55,7 @@ int init()
    SetIndexLabel( 2, "TMA Lower" );
 
    //---- name for DataWindow and indicator subwindow label
-   IndicatorShortName( "TmaTrue(" + eintHalfLength + ",M" + gintTF + ")" );
+   IndicatorShortName( "TmaTrue(" + (string) eintHalfLength + ",M" + (string) gintTF + ")" );
 
    return( 0 );
 }
@@ -78,7 +78,7 @@ int start()
    if (counted_bars < 0) return (-1);
    if (counted_bars > 0) counted_bars--;
    int intLimit = Bars - counted_bars;
-   double dblTma, dblUpper, dblLower, dblRange;
+   double dblTma, dblRange;
    int intBarShift;
 
    if ( eintBarsToProcess > 0 && intLimit > eintBarsToProcess )     intLimit = eintBarsToProcess;
@@ -125,8 +125,8 @@ int start()
 //+------------------------------------------------------------------+
 double calcTma( int intHalfLength, int intShift )
 {
-   double dblResult, dblSum, dblSumW, dblRange;
-   int inx, jnx, knx;
+   double dblResult, dblSum, dblSumW;
+   int inx, jnx;
 
    dblSumW = intHalfLength + 1;
    dblSum = dblSumW * Close[intShift];
@@ -148,8 +148,8 @@ double calcTma( int intHalfLength, int intShift )
 //+------------------------------------------------------------------+
 double calcTmaMtf( int intTF, int intHalfLength, int intUpperTfShift, double dblClose )
 {
-   double dblResult, dblSum, dblSumW, dblRange;
-   int inx, jnx, knx;
+   double dblResult, dblSum, dblSumW;
+   int inx, jnx;
 
    // This is the current bar
    dblSumW = intHalfLength + 1;
