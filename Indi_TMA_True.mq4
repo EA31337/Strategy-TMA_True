@@ -77,13 +77,13 @@ int start()
 
    if (counted_bars < 0) return (-1);
    if (counted_bars > 0) counted_bars--;
-   int intLimit = Bars - counted_bars - 1;
+   int intLimit = fmin(Bars - counted_bars - 1, 10000);
    double dblTma, dblRange;
    int intBarShift;
 
    if ( eintBarsToProcess > 0 && intLimit > eintBarsToProcess )     intLimit = eintBarsToProcess;
 
-   for( int inx = intLimit; inx >= 0; inx-- )
+   for( int inx = intLimit; inx >= 0 && !IsStopped(); inx-- )
    {
       if ( gintTF == Period() )
       {
