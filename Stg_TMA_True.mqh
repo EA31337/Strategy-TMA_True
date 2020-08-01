@@ -26,8 +26,8 @@ struct Stg_TMA_True_Params_Defaults : StgParams {
   Stg_TMA_True_Params_Defaults()
       : StgParams(::TMA_True_SignalOpenMethod, ::TMA_True_SignalOpenFilterMethod, ::TMA_True_SignalOpenLevel,
                   ::TMA_True_SignalOpenBoostMethod, ::TMA_True_SignalCloseMethod, ::TMA_True_SignalCloseLevel,
-                  ::TMA_True_PriceLimitMethod, ::TMA_True_PriceLimitLevel, ::TMA_True_TickFilterMethod, ::TMA_True_MaxSpread,
-                  ::TMA_True_Shift) {}
+                  ::TMA_True_PriceLimitMethod, ::TMA_True_PriceLimitLevel, ::TMA_True_TickFilterMethod,
+                  ::TMA_True_MaxSpread, ::TMA_True_Shift) {}
 } stg_tmat_defaults;
 
 // Defines struct to store indicator and strategy params.
