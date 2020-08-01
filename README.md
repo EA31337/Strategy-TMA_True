@@ -1,3 +1,3 @@
-# Strategy Demo
+# Strategy TMA True
 
-This is example demo strategy for the demonstration purposes.
+Strategy based on Triangular Moving Average (TMA) indicator.

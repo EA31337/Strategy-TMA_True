@@ -5,9 +5,9 @@
  */
 
 // Defines strategy's parameter values for the given pair symbol and timeframe.
-struct Stg_Demo_Params_H8 : StgParams {
+struct Stg_TMA_True_Params_H8 : StgParams {
   // Struct constructor.
-  Stg_Demo_Params_H8() : StgParams(stg_demo_defaults) {
+  Stg_TMA_True_Params_H8() : StgParams(stg_tmat_defaults) {
     lot_size = 0;
     signal_open_method = 0;
     signal_open_filter = 1;
@@ -20,4 +20,4 @@ struct Stg_Demo_Params_H8 : StgParams {
     tick_filter_method = 1;
     max_spread = 0;
   }
-} stg_demo_h8;
+} stg_tmat_h8;

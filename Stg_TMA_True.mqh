@@ -1,41 +1,41 @@
 /**
  * @file
- * Implements Demo strategy based on the Demo indicator.
+ * Implements TMA_True strategy based on the TMA_True indicator.
  */
 
 // User input params.
-INPUT float Demo_LotSize = 0;               // Lot size
-INPUT int Demo_Shift = 0;                   // Shift (relative to the current bar, 0 - default)
-INPUT int Demo_SignalOpenMethod = 0;        // Signal open method
-INPUT int Demo_SignalOpenFilterMethod = 0;  // Signal open filter method
-INPUT float Demo_SignalOpenLevel = 0;       // Signal open level
-INPUT int Demo_SignalOpenBoostMethod = 0;   // Signal open boost method
-INPUT int Demo_SignalCloseMethod = 0;       // Signal close method
-INPUT float Demo_SignalCloseLevel = 0;      // Signal close level
-INPUT int Demo_PriceLimitMethod = 0;        // Price limit method
-INPUT float Demo_PriceLimitLevel = 2;       // Price limit level
-INPUT int Demo_TickFilterMethod = 1;        // Tick filter method (0-255)
-INPUT float Demo_MaxSpread = 2.0;           // Max spread to trade (in pips)
+INPUT float TMA_True_LotSize = 0;               // Lot size
+INPUT int TMA_True_Shift = 0;                   // Shift (relative to the current bar, 0 - default)
+INPUT int TMA_True_SignalOpenMethod = 0;        // Signal open method
+INPUT int TMA_True_SignalOpenFilterMethod = 0;  // Signal open filter method
+INPUT float TMA_True_SignalOpenLevel = 0;       // Signal open level
+INPUT int TMA_True_SignalOpenBoostMethod = 0;   // Signal open boost method
+INPUT int TMA_True_SignalCloseMethod = 0;       // Signal close method
+INPUT float TMA_True_SignalCloseLevel = 0;      // Signal close level
+INPUT int TMA_True_PriceLimitMethod = 0;        // Price limit method
+INPUT float TMA_True_PriceLimitLevel = 2;       // Price limit level
+INPUT int TMA_True_TickFilterMethod = 1;        // Tick filter method (0-255)
+INPUT float TMA_True_MaxSpread = 2.0;           // Max spread to trade (in pips)
 
 // Includes.
-#include <EA31337-classes/Indicators/Indi_Demo.mqh>
+//#include <EA31337-classes/Indicators/Indi_TMA_True.mqh>
 #include <EA31337-classes/Strategy.mqh>
 
 // Defines struct with default user strategy values.
-struct Stg_Demo_Params_Defaults : StgParams {
-  Stg_Demo_Params_Defaults()
-      : StgParams(::Demo_SignalOpenMethod, ::Demo_SignalOpenFilterMethod, ::Demo_SignalOpenLevel,
-                  ::Demo_SignalOpenBoostMethod, ::Demo_SignalCloseMethod, ::Demo_SignalCloseLevel,
-                  ::Demo_PriceLimitMethod, ::Demo_PriceLimitLevel, ::Demo_TickFilterMethod, ::Demo_MaxSpread,
-                  ::Demo_Shift) {}
-} stg_demo_defaults;
+struct Stg_TMA_True_Params_Defaults : StgParams {
+  Stg_TMA_True_Params_Defaults()
+      : StgParams(::TMA_True_SignalOpenMethod, ::TMA_True_SignalOpenFilterMethod, ::TMA_True_SignalOpenLevel,
+                  ::TMA_True_SignalOpenBoostMethod, ::TMA_True_SignalCloseMethod, ::TMA_True_SignalCloseLevel,
+                  ::TMA_True_PriceLimitMethod, ::TMA_True_PriceLimitLevel, ::TMA_True_TickFilterMethod, ::TMA_True_MaxSpread,
+                  ::TMA_True_Shift) {}
+} stg_tmat_defaults;
 
 // Defines struct to store indicator and strategy params.
-struct Stg_Demo_Params {
+struct Stg_TMA_True_Params {
   StgParams sparams;
 
   // Struct constructors.
-  Stg_Demo_Params(StgParams &_sparams) : sparams(stg_demo_defaults) { sparams = _sparams; }
+  Stg_TMA_True_Params(StgParams &_sparams) : sparams(stg_tmat_defaults) { sparams = _sparams; }
 };
 
 // Loads pair specific param values.
@@ -47,25 +47,25 @@ struct Stg_Demo_Params {
 #include "sets/EURUSD_M30.h"
 #include "sets/EURUSD_M5.h"
 
-class Stg_Demo : public Strategy {
+class Stg_TMA_True : public Strategy {
  public:
-  Stg_Demo(StgParams &_params, string _name) : Strategy(_params, _name) {}
+  Stg_TMA_True(StgParams &_params, string _name) : Strategy(_params, _name) {}
 
-  static Stg_Demo *Init(ENUM_TIMEFRAMES _tf = NULL, long _magic_no = NULL, ENUM_LOG_LEVEL _log_level = V_INFO) {
+  static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL, long _magic_no = NULL, ENUM_LOG_LEVEL _log_level = V_INFO) {
     // Initialize strategy initial values.
-    StgParams _stg_params(stg_demo_defaults);
+    StgParams _stg_params(stg_tmat_defaults);
     if (!Terminal::IsOptimization()) {
-      SetParamsByTf<StgParams>(_stg_params, _tf, stg_demo_m1, stg_demo_m5, stg_demo_m15, stg_demo_m30, stg_demo_h1,
-                               stg_demo_h4, stg_demo_h8);
+      SetParamsByTf<StgParams>(_stg_params, _tf, stg_tmat_m1, stg_tmat_m5, stg_tmat_m15, stg_tmat_m30, stg_tmat_h1,
+                               stg_tmat_h4, stg_tmat_h8);
     }
     // Initialize indicator.
-    _stg_params.SetIndicator(new Indi_Demo());
+    //_stg_params.SetIndicator(new Indi_TMA_True());
     // Initialize strategy parameters.
     _stg_params.GetLog().SetLevel(_log_level);
     _stg_params.SetMagicNo(_magic_no);
     _stg_params.SetTf(_tf, _Symbol);
     // Initialize strategy instance.
-    Strategy *_strat = new Stg_Demo(_stg_params, "Demo");
+    Strategy *_strat = new Stg_TMA_True(_stg_params, "TMA True");
     _stg_params.SetStops(_strat, _strat);
     return _strat;
   }
