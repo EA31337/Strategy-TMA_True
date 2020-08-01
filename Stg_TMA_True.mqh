@@ -18,8 +18,8 @@ INPUT int TMA_True_TickFilterMethod = 1;        // Tick filter method (0-255)
 INPUT float TMA_True_MaxSpread = 2.0;           // Max spread to trade (in pips)
 
 // Includes.
-//#include <EA31337-classes/Indicators/Indi_TMA_True.mqh>
 #include <EA31337-classes/Strategy.mqh>
+#include "Indi_TMA_True.mqh"
 
 // Defines struct with default user strategy values.
 struct Stg_TMA_True_Params_Defaults : StgParams {
@@ -53,13 +53,14 @@ class Stg_TMA_True : public Strategy {
 
   static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL, long _magic_no = NULL, ENUM_LOG_LEVEL _log_level = V_INFO) {
     // Initialize strategy initial values.
+    Indi_TMA_True_Params _indi_params(indi_tmat_defaults, _tf);
     StgParams _stg_params(stg_tmat_defaults);
     if (!Terminal::IsOptimization()) {
       SetParamsByTf<StgParams>(_stg_params, _tf, stg_tmat_m1, stg_tmat_m5, stg_tmat_m15, stg_tmat_m30, stg_tmat_h1,
                                stg_tmat_h4, stg_tmat_h8);
     }
     // Initialize indicator.
-    //_stg_params.SetIndicator(new Indi_TMA_True());
+    _stg_params.SetIndicator(new Indi_TMA_True(_indi_params));
     // Initialize strategy parameters.
     _stg_params.GetLog().SetLevel(_log_level);
     _stg_params.SetMagicNo(_magic_no);

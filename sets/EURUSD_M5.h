@@ -1,8 +1,13 @@
 /*
  * @file
- * Defines strategy's default parameter values
+ * Defines strategy's and indicator's default parameter values
  * for the given pair symbol and timeframe.
  */
+
+// Defines indicator's parameter values for the given pair symbol and timeframe.
+struct Indi_TMA_True_Params_M5 : Indi_TMA_True_Params {
+  Indi_TMA_True_Params_M5() : Indi_TMA_True_Params(indi_tmat_defaults, PERIOD_M5) { shift = 0; }
+} indi_tmat_m5;
 
 // Defines strategy's parameter values for the given pair symbol and timeframe.
 struct Stg_TMA_True_Params_M5 : StgParams {

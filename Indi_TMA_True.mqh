@@ -21,22 +21,22 @@
 
 // User input params.
 INPUT string __TMA_True_Indi_Params__ = "-- TMA True indicator params --";  // >>> TMA True indicator <<<
-INPUT int Indi_TMA_True_TEMAPeriod = 8;                                     // TEMA Period
-INPUT int Indi_TMA_True_SvePeriod = 18;                                     // SVE Period
-INPUT double Indi_TMA_True_BBUpDeviations = 1.6;                            // BB Up Deviation
-INPUT double Indi_TMA_True_BBDnDeviations = 1.6;                            // BB Down Deviation
-INPUT int Indi_TMA_True_DeviationsPeriod = 63;                              // Deviations Period
+INPUT int Indi_TMA_True_Timeframe = 0;                                      // Timeframe
+INPUT int Indi_TMA_True_HalfLength = 3;                                     // Half length
+INPUT double Indi_TMA_True_AtrMultiplier = 0.5;                             // ATR multiplier
+INPUT int Indi_TMA_True_AtrPeriod = 6;                                      // ATR period
+INPUT int Indi_TMA_True_BarsToProcess = 0;                                  // Bars to process
 INPUT int Indi_TMA_True_Shift = 0;                                          // Indicator Shift
 
 // Includes.
 #include <EA31337-classes/Indicator.mqh>
 
 // Indicator line identifiers used in the indicator.
-enum ENUM_SVE_BAND_LINE {
-  SVE_BAND_MAIN = 0,   // Main line.
-  SVE_BAND_UPPER = 1,  // Upper limit.
-  SVE_BAND_LOWER = 2,  // Lower limit.
-  FINAL_SVE_BAND_LINE_ENTRY,
+enum ENUM_TMA_TRUE_MODE {
+  TMA_TRUE_MAIN = 0,   // Main line.
+  TMA_TRUE_UPPER = 1,  // Upper limit.
+  TMA_TRUE_LOWER = 2,  // Lower limit.
+  FINAL_TMA_TRUE_MODE_ENTRY,
 };
 
 // Structs.
@@ -44,20 +44,20 @@ enum ENUM_SVE_BAND_LINE {
 // Defines struct to store indicator parameter values.
 struct Indi_TMA_True_Params : public IndicatorParams {
   // Indicator params.
-  int TEMAPeriod;
-  int SvePeriod;
-  double BBUpDeviations;
-  double BBDnDeviations;
-  int DeviationsPeriod;
+  int atr_tf;
+  int half_length;
+  double atr_multiplier;
+  int atr_period;
+  int bars_to_process;
   // Struct constructors.
-  void Indi_TMA_True_Params(int _tema_period, int _sve_period, double _deviations_up, double _deviations_down,
-                            int _deviations_period, int _shift)
-      : TEMAPeriod(_tema_period),
-        SvePeriod(_sve_period),
-        BBUpDeviations(_deviations_up),
-        BBDnDeviations(_deviations_down),
-        DeviationsPeriod(_deviations_period) {
-    max_modes = FINAL_SVE_BAND_LINE_ENTRY;
+  void Indi_TMA_True_Params(int _atr_tf, int _half_length, double _atr_multiplier, int _atr_period,
+                            int _bars_to_process, int _shift)
+      : atr_tf(_atr_tf),
+        half_length(_half_length),
+        atr_multiplier(_atr_multiplier),
+        atr_period(_atr_period),
+        bars_to_process(_bars_to_process) {
+    max_modes = FINAL_TMA_TRUE_MODE_ENTRY;
     custom_indi_name = "Indi_TMA_True";
     SetDataSourceType(IDATA_ICUSTOM);
     SetDataValueType(TYPE_DOUBLE);
@@ -67,24 +67,24 @@ struct Indi_TMA_True_Params : public IndicatorParams {
     _params.tf = _tf;
   }
   // Getters.
-  int GetTEMAPeriod() { return TEMAPeriod; }
-  int GetSvePeriod() { return SvePeriod; }
-  double GetBBUpDeviations() { return BBUpDeviations; }
-  double GetBBDnDeviations() { return BBDnDeviations; }
-  int GetDeviationsPeriod() { return DeviationsPeriod; }
+  int GetATRTimeframe() { return atr_tf; }
+  int GetHalfLength() { return half_length; }
+  double GetAtrMultiplier() { return atr_multiplier; }
+  int GetAtrPeriod() { return atr_period; }
+  int GetBarsToProcess() { return bars_to_process; }
   // Setters.
-  void SetTEMAPeriod(int _value) { TEMAPeriod = _value; }
-  void SetSvePeriod(int _value) { SvePeriod = _value; }
-  void SetBBUpDeviations(double _value) { BBUpDeviations = _value; }
-  void SetBBDnDeviations(double _value) { BBDnDeviations = _value; }
-  void SetDeviationsPeriod(int _value) { DeviationsPeriod = _value; }
+  void SetATRTimeframe(int _value) { atr_tf = _value; }
+  void SetHalfLength(int _value) { half_length = _value; }
+  void SetAtrMultiplier(double _value) { atr_multiplier = _value; }
+  void SetAtrPeriod(int _value) { atr_period = _value; }
+  void SetBarsToProcess(int _value) { bars_to_process = _value; }
 };
 
 // Defines struct with default user indicator values.
 struct Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
   Indi_TMA_True_Params_Defaults()
-      : Indi_TMA_True_Params(::Indi_TMA_True_TEMAPeriod, ::Indi_TMA_True_SvePeriod, ::Indi_TMA_True_BBUpDeviations,
-                             ::Indi_TMA_True_BBDnDeviations, ::Indi_TMA_True_DeviationsPeriod, ::Indi_TMA_True_Shift) {}
+      : Indi_TMA_True_Params(::Indi_TMA_True_Timeframe, ::Indi_TMA_True_HalfLength, ::Indi_TMA_True_AtrMultiplier,
+                             ::Indi_TMA_True_AtrPeriod, ::Indi_TMA_True_BarsToProcess, ::Indi_TMA_True_Shift) {}
 } indi_tmat_defaults;
 
 /**
@@ -99,12 +99,12 @@ class Indi_TMA_True : public Indicator {
    * Class constructor.
    */
   Indi_TMA_True(Indi_TMA_True_Params &_p)
-      : params(_p.TEMAPeriod, _p.SvePeriod, _p.BBUpDeviations, _p.BBDnDeviations, _p.DeviationsPeriod, _p.shift),
+      : params(_p.atr_tf, _p.half_length, _p.atr_multiplier, _p.atr_period, _p.bars_to_process, _p.shift),
         Indicator((IndicatorParams)_p) {
     params = _p;
   }
   Indi_TMA_True(Indi_TMA_True_Params &_p, ENUM_TIMEFRAMES _tf)
-      : params(_p.TEMAPeriod, _p.SvePeriod, _p.BBUpDeviations, _p.BBDnDeviations, _p.DeviationsPeriod, _p.shift),
+      : params(_p.atr_tf, _p.half_length, _p.atr_multiplier, _p.atr_period, _p.bars_to_process, _p.shift),
         Indicator(NULL, _tf) {
     params = _p;
   }
@@ -118,14 +118,14 @@ class Indi_TMA_True : public Indicator {
    * Returns the indicator's value.
    *
    */
-  double GetValue(ENUM_SVE_BAND_LINE _mode, int _shift = 0) {
+  double GetValue(ENUM_TMA_TRUE_MODE _mode, int _shift = 0) {
     ResetLastError();
     double _value = EMPTY_VALUE;
     switch (params.idstype) {
       case IDATA_ICUSTOM:
-        _value = iCustom(istate.handle, GetSymbol(), GetTf(), params.custom_indi_name, params.GetTEMAPeriod(),
-                         params.GetSvePeriod(), params.GetBBUpDeviations(), params.GetBBDnDeviations(),
-                         params.GetDeviationsPeriod(), _mode, _shift);
+        _value =
+            iCustom(istate.handle, GetSymbol(), GetTf(), params.custom_indi_name, params.tf, params.GetHalfLength(),
+                    params.GetAtrMultiplier(), params.GetAtrPeriod(), params.GetBarsToProcess(), _mode, _shift);
         break;
       default:
         SetUserError(ERR_USER_NOT_SUPPORTED);
@@ -147,12 +147,12 @@ class Indi_TMA_True : public Indicator {
       _entry = idata.GetByPos(_position);
     } else {
       _entry.timestamp = GetBarTime(_shift);
-      for (ENUM_SVE_BAND_LINE _mode = 0; _mode < FINAL_SVE_BAND_LINE_ENTRY; _mode++) {
+      for (ENUM_TMA_TRUE_MODE _mode = 0; _mode < FINAL_TMA_TRUE_MODE_ENTRY; _mode++) {
         _entry.value.SetValue(params.idvtype, GetValue(_mode, _shift), _mode);
       }
       _entry.SetFlag(INDI_ENTRY_FLAG_IS_VALID, _entry.value.GetMinDbl(params.idvtype) > 0 &&
-                                                   _entry.value.GetValueDbl(params.idvtype, SVE_BAND_LOWER) <
-                                                       _entry.value.GetValueDbl(params.idvtype, SVE_BAND_UPPER));
+                                                   _entry.value.GetValueDbl(params.idvtype, TMA_TRUE_LOWER) <
+                                                       _entry.value.GetValueDbl(params.idvtype, TMA_TRUE_UPPER));
       if (_entry.IsValid()) {
         idata.Add(_entry, _bar_time);
       }
