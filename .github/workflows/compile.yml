@@ -24,17 +24,32 @@ jobs:
         with:
           path: Include/EA31337-classes
           repository: EA31337/EA31337-classes
-      - name: Compile for MQL4
+      - name: Compile indicator (MQL4)
         uses: fx31337/mql-compile-action@master
         with:
-          path: Stg_Demo.mq4
+          path: Indi_TMA_True.mq4
           include: .
           mt-version: 5.0.0.2361
           verbose: true
-      - name: Compile for MQL5
+      - name: Compile indicator (MQL5)
+        if: false
         uses: fx31337/mql-compile-action@master
         with:
-          path: Stg_Demo.mq5
+          path: Indi_TMA_True.mq5
+          include: .
+          mt-version: 5.0.0.2515
+          verbose: true
+      - name: Compile strategy (MQL4)
+        uses: fx31337/mql-compile-action@master
+        with:
+          path: Stg_TMA_True.mq4
+          include: .
+          mt-version: 5.0.0.2361
+          verbose: true
+      - name: Compile strategy (MQL5)
+        uses: fx31337/mql-compile-action@master
+        with:
+          path: Stg_TMA_True.mq5
           include: .
           mt-version: 5.0.0.2515
           verbose: true
