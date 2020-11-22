@@ -12,8 +12,8 @@ INPUT float TMA_True_SignalOpenLevel = 0;       // Signal open level
 INPUT int TMA_True_SignalOpenBoostMethod = 0;   // Signal open boost method
 INPUT int TMA_True_SignalCloseMethod = 0;       // Signal close method
 INPUT float TMA_True_SignalCloseLevel = 0;      // Signal close level
-INPUT int TMA_True_PriceLimitMethod = 0;        // Price limit method
-INPUT float TMA_True_PriceLimitLevel = 2;       // Price limit level
+INPUT int TMA_True_PriceStopMethod = 0;         // Price stop method
+INPUT float TMA_True_PriceStopLevel = 2;        // Price stop level
 INPUT int TMA_True_TickFilterMethod = 1;        // Tick filter method (0-255)
 INPUT float TMA_True_MaxSpread = 2.0;           // Max spread to trade (in pips)
 
@@ -26,7 +26,7 @@ struct Stg_TMA_True_Params_Defaults : StgParams {
   Stg_TMA_True_Params_Defaults()
       : StgParams(::TMA_True_SignalOpenMethod, ::TMA_True_SignalOpenFilterMethod, ::TMA_True_SignalOpenLevel,
                   ::TMA_True_SignalOpenBoostMethod, ::TMA_True_SignalCloseMethod, ::TMA_True_SignalCloseLevel,
-                  ::TMA_True_PriceLimitMethod, ::TMA_True_PriceLimitLevel, ::TMA_True_TickFilterMethod,
+                  ::TMA_True_PriceStopMethod, ::TMA_True_PriceStopLevel, ::TMA_True_TickFilterMethod,
                   ::TMA_True_MaxSpread, ::TMA_True_Shift) {}
 } stg_tmat_defaults;
 
@@ -113,9 +113,9 @@ class Stg_TMA_True : public Strategy {
   }
 
   /**
-   * Gets price limit value for profit take or stop loss.
+   * Gets price stop value for profit take or stop loss.
    */
-  float PriceLimit(ENUM_ORDER_TYPE _cmd, ENUM_ORDER_TYPE_VALUE _mode, int _method = 0, float _level = 0.0f) {
+  float PriceStop(ENUM_ORDER_TYPE _cmd, ENUM_ORDER_TYPE_VALUE _mode, int _method = 0, float _level = 0.0f) {
     Indi_TMA_True *_indi = Data();
     double _trail = _level * Market().GetPipSize();
     // int _bar_count = (int)_level * 10;
