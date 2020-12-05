@@ -19,6 +19,7 @@ INPUT float TMA_True_MaxSpread = 2.0;           // Max spread to trade (in pips)
 
 // Includes.
 #include <EA31337-classes/Strategy.mqh>
+
 #include "Indi_TMA_True.mqh"
 
 // Defines struct with default user strategy values.
@@ -87,25 +88,25 @@ class Stg_TMA_True : public Strategy {
     double pip_level = _level * Chart().GetPipSize();
     switch (_cmd) {
       case ORDER_TYPE_BUY:
-        _result = _indi[CURR].value[TMA_TRUE_MAIN] < _indi[CURR].value[TMA_TRUE_LOWER] + pip_level;
+        _result = _indi[CURR][TMA_TRUE_MAIN] < _indi[CURR][TMA_TRUE_LOWER] + pip_level;
         if (_method != 0) {
-          if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR].value[TMA_TRUE_LOWER];
-          if (METHOD(_method, 1)) _result &= (_indi[CURR].value[TMA_TRUE_LOWER] > _indi[PPREV].value[TMA_TRUE_LOWER]);
-          if (METHOD(_method, 2)) _result &= (_indi[CURR].value[TMA_TRUE_MAIN] > _indi[PPREV].value[TMA_TRUE_MAIN]);
-          if (METHOD(_method, 3)) _result &= (_indi[CURR].value[TMA_TRUE_UPPER] > _indi[PPREV].value[TMA_TRUE_UPPER]);
-          if (METHOD(_method, 4)) _result &= Open[CURR] < _indi[CURR].value[TMA_TRUE_MAIN];
-          if (METHOD(_method, 5)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR].value[TMA_TRUE_MAIN];
+          if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR][TMA_TRUE_LOWER];
+          if (METHOD(_method, 1)) _result &= (_indi[CURR][TMA_TRUE_LOWER] > _indi[PPREV][TMA_TRUE_LOWER]);
+          if (METHOD(_method, 2)) _result &= (_indi[CURR][TMA_TRUE_MAIN] > _indi[PPREV][TMA_TRUE_MAIN]);
+          if (METHOD(_method, 3)) _result &= (_indi[CURR][TMA_TRUE_UPPER] > _indi[PPREV][TMA_TRUE_UPPER]);
+          if (METHOD(_method, 4)) _result &= Open[CURR] < _indi[CURR][TMA_TRUE_MAIN];
+          if (METHOD(_method, 5)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR][TMA_TRUE_MAIN];
         }
         break;
       case ORDER_TYPE_SELL:
-        _result = _indi[CURR].value[TMA_TRUE_MAIN] > _indi[CURR].value[TMA_TRUE_UPPER] + pip_level;
+        _result = _indi[CURR][TMA_TRUE_MAIN] > _indi[CURR][TMA_TRUE_UPPER] + pip_level;
         if (_method != 0) {
-          if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR].value[TMA_TRUE_UPPER];
-          if (METHOD(_method, 1)) _result &= (_indi[CURR].value[TMA_TRUE_LOWER] < _indi[PPREV].value[TMA_TRUE_LOWER]);
-          if (METHOD(_method, 2)) _result &= (_indi[CURR].value[TMA_TRUE_MAIN] < _indi[PPREV].value[TMA_TRUE_MAIN]);
-          if (METHOD(_method, 3)) _result &= (_indi[CURR].value[TMA_TRUE_UPPER] < _indi[PPREV].value[TMA_TRUE_UPPER]);
-          if (METHOD(_method, 4)) _result &= Open[CURR] > _indi[CURR].value[TMA_TRUE_MAIN];
-          if (METHOD(_method, 5)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR].value[TMA_TRUE_MAIN];
+          if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR][TMA_TRUE_UPPER];
+          if (METHOD(_method, 1)) _result &= (_indi[CURR][TMA_TRUE_LOWER] < _indi[PPREV][TMA_TRUE_LOWER]);
+          if (METHOD(_method, 2)) _result &= (_indi[CURR][TMA_TRUE_MAIN] < _indi[PPREV][TMA_TRUE_MAIN]);
+          if (METHOD(_method, 3)) _result &= (_indi[CURR][TMA_TRUE_UPPER] < _indi[PPREV][TMA_TRUE_UPPER]);
+          if (METHOD(_method, 4)) _result &= Open[CURR] > _indi[CURR][TMA_TRUE_MAIN];
+          if (METHOD(_method, 5)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR][TMA_TRUE_MAIN];
         }
         break;
     }
@@ -124,24 +125,21 @@ class Stg_TMA_True : public Strategy {
     double _result = _default_value;
     switch (_method) {
       case 1:
-        _result = (_direction > 0 ? _indi[CURR].value[TMA_TRUE_UPPER] : _indi[CURR].value[TMA_TRUE_LOWER]) +
-                  _trail * _direction;
+        _result = (_direction > 0 ? _indi[CURR][TMA_TRUE_UPPER] : _indi[CURR][TMA_TRUE_LOWER]) + _trail * _direction;
         break;
       case 2:
-        _result = (_direction > 0 ? _indi[PREV].value[TMA_TRUE_UPPER] : _indi[PREV].value[TMA_TRUE_LOWER]) +
-                  _trail * _direction;
+        _result = (_direction > 0 ? _indi[PREV][TMA_TRUE_UPPER] : _indi[PREV][TMA_TRUE_LOWER]) + _trail * _direction;
         break;
       case 3:
-        _result = (_direction > 0 ? _indi[PPREV].value[TMA_TRUE_UPPER] : _indi[PPREV].value[TMA_TRUE_LOWER]) +
-                  _trail * _direction;
+        _result = (_direction > 0 ? _indi[PPREV][TMA_TRUE_UPPER] : _indi[PPREV][TMA_TRUE_LOWER]) + _trail * _direction;
         break;
       case 4:
-        _result = (_direction > 0 ? fmax(_indi[PREV].value[TMA_TRUE_UPPER], _indi[PPREV].value[TMA_TRUE_UPPER])
-                                  : fmin(_indi[PREV].value[TMA_TRUE_LOWER], _indi[PPREV].value[TMA_TRUE_LOWER])) +
+        _result = (_direction > 0 ? fmax(_indi[PREV][TMA_TRUE_UPPER], _indi[PPREV][TMA_TRUE_UPPER])
+                                  : fmin(_indi[PREV][TMA_TRUE_LOWER], _indi[PPREV][TMA_TRUE_LOWER])) +
                   _trail * _direction;
         break;
       case 5:
-        _result = _indi[CURR].value[TMA_TRUE_MAIN] + _trail * _direction;
+        _result = _indi[CURR][TMA_TRUE_MAIN] + _trail * _direction;
         break;
     }
     return (float)_result;
