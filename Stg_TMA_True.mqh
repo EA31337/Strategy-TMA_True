@@ -18,8 +18,6 @@ INPUT int TMA_True_TickFilterMethod = 1;        // Tick filter method (0-255)
 INPUT float TMA_True_MaxSpread = 2.0;           // Max spread to trade (in pips)
 
 // Includes.
-#include <EA31337-classes/Strategy.mqh>
-
 #include "Indi_TMA_True.mqh"
 
 // Defines struct with default user strategy values.

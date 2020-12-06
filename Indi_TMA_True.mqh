@@ -28,9 +28,6 @@ INPUT int Indi_TMA_True_AtrPeriod = 6;                                      // A
 INPUT int Indi_TMA_True_BarsToProcess = 0;                                  // Bars to process
 INPUT int Indi_TMA_True_Shift = 0;                                          // Indicator Shift
 
-// Includes.
-#include <EA31337-classes/Indicator.mqh>
-
 // Indicator line identifiers used in the indicator.
 enum ENUM_TMA_TRUE_MODE {
   TMA_TRUE_MAIN = 0,   // Main line.
