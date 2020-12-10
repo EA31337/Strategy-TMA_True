@@ -145,11 +145,10 @@ class Indi_TMA_True : public Indicator {
     } else {
       _entry.timestamp = GetBarTime(_shift);
       for (ENUM_TMA_TRUE_MODE _mode = 0; _mode < FINAL_TMA_TRUE_MODE_ENTRY; _mode++) {
-        _entry.value.SetValue(params.idvtype, GetValue(_mode, _shift), _mode);
+        _entry.values[_mode] = GetValue(_mode, _shift);
       }
-      _entry.SetFlag(INDI_ENTRY_FLAG_IS_VALID, _entry.value.GetMinDbl(params.idvtype) > 0 &&
-                                                   _entry.value.GetValueDbl(params.idvtype, TMA_TRUE_LOWER) <
-                                                       _entry.value.GetValueDbl(params.idvtype, TMA_TRUE_UPPER));
+      _entry.SetFlag(INDI_ENTRY_FLAG_IS_VALID,
+                     _entry.GetMin<double>() > 0 && _entry.values[TMA_TRUE_UPPER].IsGt(_entry[TMA_TRUE_LOWER]));
       if (_entry.IsValid()) {
         idata.Add(_entry, _bar_time);
       }
