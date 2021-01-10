@@ -17,9 +17,24 @@ INPUT int TMA_True_TickFilterMethod = 1;        // Tick filter method (0-255)
 INPUT float TMA_True_MaxSpread = 4.0;           // Max spread to trade (in pips)
 INPUT int TMA_True_Shift = 0;                   // Shift (relative to the current bar, 0 - default)
 INPUT int TMA_True_OrderCloseTime = -20;        // Order close time in mins (>0) or bars (<0)
+INPUT string __TMA_True_Indi_TMA_True_Params__ =
+    "-- TMA True: TMA True indicator params --";          // >>> TMA True strategy: TMA True indicator <<<
+INPUT int TMA_True_Indi_TMA_True_Timeframe = 0;           // Timeframe
+INPUT int TMA_True_Indi_TMA_True_HalfLength = 3;          // Half length
+INPUT double TMA_True_Indi_TMA_True_AtrMultiplier = 0.5;  // ATR multiplier
+INPUT int TMA_True_Indi_TMA_True_AtrPeriod = 6;           // ATR period
+INPUT int TMA_True_Indi_TMA_True_BarsToProcess = 0;       // Bars to process
+INPUT int TMA_True_Indi_TMA_True_Shift = 0;               // Indicator Shift
 
-// Includes.
-#include "Indi_TMA_True.mqh"
+// Structs.
+
+// Defines struct with default user indicator values.
+struct Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
+  Indi_TMA_True_Params_Defaults()
+      : Indi_TMA_True_Params(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
+                             ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
+                             ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift) {}
+} indi_tmat_defaults;
 
 // Defines struct with default user strategy values.
 struct Stg_TMA_True_Params_Defaults : StgParams {

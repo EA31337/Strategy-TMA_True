@@ -19,15 +19,6 @@
  *
  */
 
-// User input params.
-INPUT string __TMA_True_Indi_Params__ = "-- TMA True indicator params --";  // >>> TMA True indicator <<<
-INPUT int Indi_TMA_True_Timeframe = 0;                                      // Timeframe
-INPUT int Indi_TMA_True_HalfLength = 3;                                     // Half length
-INPUT double Indi_TMA_True_AtrMultiplier = 0.5;                             // ATR multiplier
-INPUT int Indi_TMA_True_AtrPeriod = 6;                                      // ATR period
-INPUT int Indi_TMA_True_BarsToProcess = 0;                                  // Bars to process
-INPUT int Indi_TMA_True_Shift = 0;                                          // Indicator Shift
-
 // Indicator line identifiers used in the indicator.
 enum ENUM_TMA_TRUE_MODE {
   TMA_TRUE_MAIN = 0,   // Main line.
@@ -76,13 +67,6 @@ struct Indi_TMA_True_Params : public IndicatorParams {
   void SetAtrPeriod(int _value) { atr_period = _value; }
   void SetBarsToProcess(int _value) { bars_to_process = _value; }
 };
-
-// Defines struct with default user indicator values.
-struct Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
-  Indi_TMA_True_Params_Defaults()
-      : Indi_TMA_True_Params(::Indi_TMA_True_Timeframe, ::Indi_TMA_True_HalfLength, ::Indi_TMA_True_AtrMultiplier,
-                             ::Indi_TMA_True_AtrPeriod, ::Indi_TMA_True_BarsToProcess, ::Indi_TMA_True_Shift) {}
-} indi_tmat_defaults;
 
 /**
  * Implements indicator class.

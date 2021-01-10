@@ -6,10 +6,12 @@
 // Defines indicator's parameter values for the given pair symbol and timeframe.
 struct Indi_TMA_True_Params_{{ Timeframe }} : Indi_TMA_True_Params {
   Indi_TMA_True_Params_{{ Timeframe }}() : Indi_TMA_True_Params(indi_tmat_defaults, PERIOD_{{ Timeframe }}) {
-    applied_price = (ENUM_APPLIED_PRICE){{ TMA_True_Indi_TMA_True_Applied_Price | default(0) }};
-    ma_method = {{ TMA_True_Indi_TMA_True_MA_Method | default(0) }};
-    period = {{ TMA_True_Indi_TMA_True_Period | default(0) }};
-    shift = {{ TMA_True_Shift | default(0) }};
+    atr_multiplier = {{ TMA_True_Indi_TMA_True_AtrMultiplier | default(0) }};
+    atr_period = {{ TMA_True_Indi_TMA_True_AtrPeriod | default(0) }};
+    atr_tf = {{ TMA_True_Indi_TMA_True_Timeframe | default(0) }};
+    bars_to_process = {{ TMA_True_Indi_TMA_True_BarsToProcess | default(0) }};
+    half_length = {{ TMA_True_Indi_TMA_True_HalfLength | default(0) }};
+    shift = {{ TMA_True_Indi_TMA_True_Shift | default(0) }};
   }
 } indi_tmat_{{ Timeframe | lower }};
 
