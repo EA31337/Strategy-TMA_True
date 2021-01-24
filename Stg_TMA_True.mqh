@@ -85,7 +85,6 @@ class Stg_TMA_True : public Strategy {
     _stg_params.SetTf(_tf, _Symbol);
     // Initialize strategy instance.
     Strategy *_strat = new Stg_TMA_True(_stg_params, "TMA True");
-    _stg_params.SetStops(_strat, _strat);
     return _strat;
   }
 
