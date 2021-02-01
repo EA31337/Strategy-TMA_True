@@ -71,12 +71,12 @@ class Stg_TMA_True : public Strategy {
     // Initialize strategy initial values.
     Indi_TMA_True_Params _indi_params(indi_tmat_defaults, _tf);
     StgParams _stg_params(stg_tmat_defaults);
-    if (!Terminal::IsOptimization()) {
-      SetParamsByTf<Indi_TMA_True_Params>(_indi_params, _tf, indi_tmat_m1, indi_tmat_m5, indi_tmat_m15, indi_tmat_m30,
-                                          indi_tmat_h1, indi_tmat_h4, indi_tmat_h8);
-      SetParamsByTf<StgParams>(_stg_params, _tf, stg_tmat_m1, stg_tmat_m5, stg_tmat_m15, stg_tmat_m30, stg_tmat_h1,
-                               stg_tmat_h4, stg_tmat_h8);
-    }
+#ifdef __config__
+    SetParamsByTf<Indi_TMA_True_Params>(_indi_params, _tf, indi_tmat_m1, indi_tmat_m5, indi_tmat_m15, indi_tmat_m30,
+                                        indi_tmat_h1, indi_tmat_h4, indi_tmat_h8);
+    SetParamsByTf<StgParams>(_stg_params, _tf, stg_tmat_m1, stg_tmat_m5, stg_tmat_m15, stg_tmat_m30, stg_tmat_h1,
+                             stg_tmat_h4, stg_tmat_h8);
+#endif
     // Initialize indicator.
     _stg_params.SetIndicator(new Indi_TMA_True(_indi_params));
     // Initialize strategy parameters.
