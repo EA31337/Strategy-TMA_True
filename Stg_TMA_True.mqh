@@ -4,19 +4,20 @@
  */
 
 // User input params.
-INPUT float TMA_True_LotSize = 0;               // Lot size
-INPUT int TMA_True_SignalOpenMethod = 0;        // Signal open method
-INPUT int TMA_True_SignalOpenFilterMethod = 1;  // Signal open filter method
-INPUT float TMA_True_SignalOpenLevel = 0.0f;    // Signal open level
-INPUT int TMA_True_SignalOpenBoostMethod = 0;   // Signal open boost method
-INPUT int TMA_True_SignalCloseMethod = 0;       // Signal close method
-INPUT float TMA_True_SignalCloseLevel = 0.0f;   // Signal close level
-INPUT int TMA_True_PriceStopMethod = 0;         // Price stop method
-INPUT float TMA_True_PriceStopLevel = 2;        // Price stop level
-INPUT int TMA_True_TickFilterMethod = 1;        // Tick filter method (0-255)
-INPUT float TMA_True_MaxSpread = 4.0;           // Max spread to trade (in pips)
-INPUT int TMA_True_Shift = 0;                   // Shift (relative to the current bar, 0 - default)
-INPUT int TMA_True_OrderCloseTime = -20;        // Order close time in mins (>0) or bars (<0)
+INPUT string __TMA_True_Parameters__ = "-- TMA True strategy params --";  // >>> TMA True <<<
+INPUT float TMA_True_LotSize = 0;                                         // Lot size
+INPUT int TMA_True_SignalOpenMethod = 0;                                  // Signal open method
+INPUT int TMA_True_SignalOpenFilterMethod = 1;                            // Signal open filter method
+INPUT float TMA_True_SignalOpenLevel = 0.0f;                              // Signal open level
+INPUT int TMA_True_SignalOpenBoostMethod = 0;                             // Signal open boost method
+INPUT int TMA_True_SignalCloseMethod = 0;                                 // Signal close method
+INPUT float TMA_True_SignalCloseLevel = 0.0f;                             // Signal close level
+INPUT int TMA_True_PriceStopMethod = 0;                                   // Price stop method
+INPUT float TMA_True_PriceStopLevel = 2;                                  // Price stop level
+INPUT int TMA_True_TickFilterMethod = 1;                                  // Tick filter method (0-255)
+INPUT float TMA_True_MaxSpread = 4.0;                                     // Max spread to trade (in pips)
+INPUT int TMA_True_Shift = 0;             // Shift (relative to the current bar, 0 - default)
+INPUT int TMA_True_OrderCloseTime = -20;  // Order close time in mins (>0) or bars (<0)
 INPUT string __TMA_True_Indi_TMA_True_Params__ =
     "-- TMA True: TMA True indicator params --";          // >>> TMA True strategy: TMA True indicator <<<
 INPUT int TMA_True_Indi_TMA_True_Timeframe = 0;           // Timeframe
@@ -70,12 +71,12 @@ class Stg_TMA_True : public Strategy {
     // Initialize strategy initial values.
     Indi_TMA_True_Params _indi_params(indi_tmat_defaults, _tf);
     StgParams _stg_params(stg_tmat_defaults);
-    if (!Terminal::IsOptimization()) {
-      SetParamsByTf<Indi_TMA_True_Params>(_indi_params, _tf, indi_tmat_m1, indi_tmat_m5, indi_tmat_m15, indi_tmat_m30,
-                                          indi_tmat_h1, indi_tmat_h4, indi_tmat_h8);
-      SetParamsByTf<StgParams>(_stg_params, _tf, stg_tmat_m1, stg_tmat_m5, stg_tmat_m15, stg_tmat_m30, stg_tmat_h1,
-                               stg_tmat_h4, stg_tmat_h8);
-    }
+#ifdef __config__
+    SetParamsByTf<Indi_TMA_True_Params>(_indi_params, _tf, indi_tmat_m1, indi_tmat_m5, indi_tmat_m15, indi_tmat_m30,
+                                        indi_tmat_h1, indi_tmat_h4, indi_tmat_h8);
+    SetParamsByTf<StgParams>(_stg_params, _tf, stg_tmat_m1, stg_tmat_m5, stg_tmat_m15, stg_tmat_m30, stg_tmat_h1,
+                             stg_tmat_h4, stg_tmat_h8);
+#endif
     // Initialize indicator.
     _stg_params.SetIndicator(new Indi_TMA_True(_indi_params));
     // Initialize strategy parameters.
@@ -84,7 +85,6 @@ class Stg_TMA_True : public Strategy {
     _stg_params.SetTf(_tf, _Symbol);
     // Initialize strategy instance.
     Strategy *_strat = new Stg_TMA_True(_stg_params, "TMA True");
-    _stg_params.SetStops(_strat, _strat);
     return _strat;
   }
 

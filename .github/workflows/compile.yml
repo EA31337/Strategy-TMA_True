@@ -31,7 +31,9 @@ jobs:
           path: Include/EA31337-classes
           ref: dev
           repository: EA31337/EA31337-classes
-      - name: Compile for MQL4
+      - name: Enables optimization mode
+        run: echo '#define __input__' > config/define.h
+      - name: Compile strategy for MQL4
         uses: fx31337/mql-compile-action@master
         with:
           include: .
@@ -39,7 +41,7 @@ jobs:
           mt-version: 5.0.0.2361
           path: Stg_TMA_True.mq4
           verbose: true
-      - name: Compile for MQL5
+      - name: Compile strategy for MQL5
         uses: fx31337/mql-compile-action@master
         with:
           include: .
@@ -49,7 +51,7 @@ jobs:
       - name: List compiled files
         run: '(Get-ChildItem -Recurse -Path . -Include *.ex[45]).fullname'
       - run: Get-Location
-      - name: Upload artifacts
+      - name: Upload strategy artifacts
         uses: actions/upload-artifact@v2
         with:
           name: EA
@@ -66,7 +68,7 @@ jobs:
           path: Include/EA31337-classes
           ref: dev
           repository: EA31337/EA31337-classes
-      - name: Compile for MQL4
+      - name: Compile required indicator for MQL4
         uses: fx31337/mql-compile-action@master
         with:
           include: .
@@ -74,18 +76,19 @@ jobs:
           mt-version: 5.0.0.2361
           path: Indicators/Indi_TMA_True.mq4
           verbose: true
-      - name: Compile for MQL5
+      - name: Compile required indicator for MQL5
         uses: fx31337/mql-compile-action@master
         with:
           include: .
+          init-platform: true
           mt-version: 5.0.0.2515
           path: Indicators/Indi_TMA_True.mq5
           verbose: true
       - name: List compiled files
         run: '(Get-ChildItem -Recurse -Path . -Include *.ex[45]).fullname'
       - run: Get-Location
-      - name: Upload artifacts
+      - name: Upload indicator artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Indicators
-          path: '*.ex?'
+          path: 'Indicators/*.ex?'
