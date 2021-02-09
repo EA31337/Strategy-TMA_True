@@ -22,7 +22,7 @@ INPUT string __TMA_True_Indi_TMA_True_Params__ =
     "-- TMA True: TMA True indicator params --";          // >>> TMA True strategy: TMA True indicator <<<
 INPUT int TMA_True_Indi_TMA_True_Timeframe = 0;           // Timeframe
 INPUT int TMA_True_Indi_TMA_True_HalfLength = 3;          // Half length
-INPUT double TMA_True_Indi_TMA_True_AtrMultiplier = 0.5;  // ATR multiplier
+INPUT double TMA_True_Indi_TMA_True_AtrMultiplier = 1.5;  // ATR multiplier
 INPUT int TMA_True_Indi_TMA_True_AtrPeriod = 6;           // ATR period
 INPUT int TMA_True_Indi_TMA_True_BarsToProcess = 0;       // Bars to process
 INPUT int TMA_True_Indi_TMA_True_Shift = 0;               // Indicator Shift
@@ -93,16 +93,21 @@ class Stg_TMA_True : public Strategy {
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, float _level = 0.0f, int _shift = 0) {
     Indicator *_indi = Data();
+    Chart *_chart = sparams.GetChart();
     bool _is_valid = _indi[CURR].IsValid();
     bool _result = _is_valid;
     if (!_result) {
       // Returns false when indicator data is not valid.
       return false;
     }
-    double pip_level = _level * Chart().GetPipSize();
+    double lowest_price, highest_price;
+    double _change_pc = Math::ChangeInPct(_indi[1][(int)TMA_TRUE_MAIN], _indi[0][(int)TMA_TRUE_MAIN], true);
     switch (_cmd) {
       case ORDER_TYPE_BUY:
-        _result = _indi[CURR][(int)TMA_TRUE_MAIN] < _indi[CURR][(int)TMA_TRUE_LOWER] + pip_level;
+        lowest_price = fmin3(_chart.GetLow(CURR), _chart.GetLow(PREV), _chart.GetLow(PPREV));
+        _result = (lowest_price < fmax3(_indi[CURR][(int)TMA_TRUE_LOWER], _indi[PREV][(int)TMA_TRUE_LOWER],
+                                        _indi[PPREV][(int)TMA_TRUE_LOWER]));
+        _result &= _change_pc > _level;
         if (_method != 0) {
           if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR][(int)TMA_TRUE_LOWER];
           if (METHOD(_method, 1)) _result &= (_indi[CURR][(int)TMA_TRUE_LOWER] > _indi[PPREV][(int)TMA_TRUE_LOWER]);
@@ -113,7 +118,11 @@ class Stg_TMA_True : public Strategy {
         }
         break;
       case ORDER_TYPE_SELL:
-        _result = _indi[CURR][(int)TMA_TRUE_MAIN] > _indi[CURR][(int)TMA_TRUE_UPPER] + pip_level;
+        // Price value was higher than the upper band.
+        highest_price = fmin3(_chart.GetHigh(CURR), _chart.GetHigh(PREV), _chart.GetHigh(PPREV));
+        _result = (highest_price > fmin3(_indi[CURR][(int)TMA_TRUE_UPPER], _indi[PREV][(int)TMA_TRUE_UPPER],
+                                         _indi[PPREV][(int)TMA_TRUE_UPPER]));
+        _result &= _change_pc < -_level;
         if (_method != 0) {
           if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR][(int)TMA_TRUE_UPPER];
           if (METHOD(_method, 1)) _result &= (_indi[CURR][(int)TMA_TRUE_LOWER] < _indi[PPREV][(int)TMA_TRUE_LOWER]);

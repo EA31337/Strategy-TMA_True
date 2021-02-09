@@ -131,8 +131,9 @@ class Indi_TMA_True : public Indicator {
       for (ENUM_TMA_TRUE_MODE _mode = 0; _mode < FINAL_TMA_TRUE_MODE_ENTRY; _mode++) {
         _entry.values[_mode] = GetValue(_mode, _shift);
       }
-      _entry.SetFlag(INDI_ENTRY_FLAG_IS_VALID,
-                     _entry.GetMin<double>() > 0 && _entry.values[TMA_TRUE_UPPER].IsGt(_entry[(int)TMA_TRUE_LOWER]));
+      _entry.SetFlag(
+          INDI_ENTRY_FLAG_IS_VALID,
+          _entry.GetMin<double>() > 0 && _entry.values[TMA_TRUE_UPPER].IsGt<double>(_entry[(int)TMA_TRUE_LOWER]));
       if (_entry.IsValid()) {
         idata.Add(_entry, _bar_time);
       }
