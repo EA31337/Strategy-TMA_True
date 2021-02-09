@@ -3,5 +3,5 @@ TMA_True_Indi_TMA_True_AtrPeriod,1=4
 TMA_True_Indi_TMA_True_AtrPeriod,2=4
 TMA_True_Indi_TMA_True_AtrPeriod,3=24
 TMA_True_Indi_TMA_True_AtrPeriod,F=1
-Force_SignalOpenFilterMethod=1
-Force_TickFilterMethod=1
+TMA_True_SignalOpenFilterMethod=1
+TMA_True_TickFilterMethod=1
