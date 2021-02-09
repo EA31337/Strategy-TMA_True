@@ -1,12 +1,18 @@
-/*
+/**
  * @file
- * Defines strategy's and indicator's default parameter values
- * for the given pair symbol and timeframe.
+ * Defines default strategy parameter values for the given timeframe.
  */
 
 // Defines indicator's parameter values for the given pair symbol and timeframe.
 struct Indi_TMA_True_Params_M1 : Indi_TMA_True_Params {
-  Indi_TMA_True_Params_M1() : Indi_TMA_True_Params(indi_tmat_defaults, PERIOD_M1) { shift = 0; }
+  Indi_TMA_True_Params_M1() : Indi_TMA_True_Params(indi_tmat_defaults, PERIOD_M1) {
+    atr_multiplier = 2.5;
+    atr_period = 24.0;
+    atr_tf = 0.0;
+    bars_to_process = 4.0;
+    half_length = 4.0;
+    shift = 0;
+  }
 } indi_tmat_m1;
 
 // Defines strategy's parameter values for the given pair symbol and timeframe.
@@ -21,7 +27,7 @@ struct Stg_TMA_True_Params_M1 : StgParams {
     signal_close_method = 0;
     signal_close_level = (float)0;
     price_stop_method = 0;
-    price_stop_level = (float)2;
+    price_stop_level = (float)1;
     tick_filter_method = 1;
     max_spread = 0;
   }
