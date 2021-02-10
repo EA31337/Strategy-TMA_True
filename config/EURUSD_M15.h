@@ -9,7 +9,7 @@ struct Indi_TMA_True_Params_M15 : Indi_TMA_True_Params {
     atr_multiplier = 4.0;
     atr_period = 12;
     atr_tf = 0.0;
-    bars_to_process = 1.0;
+    bars_to_process = 4.0;
     half_length = 3.0;
     shift = 0;
   }
@@ -22,7 +22,7 @@ struct Stg_TMA_True_Params_M15 : StgParams {
     lot_size = 0;
     signal_open_method = 0;
     signal_open_filter = 1;
-    signal_open_level = (float)0;
+    signal_open_level = (float)0.0;
     signal_open_boost = 0;
     signal_close_method = 0;
     signal_close_level = (float)0;

@@ -7,7 +7,7 @@
 struct Indi_TMA_True_Params_M1 : Indi_TMA_True_Params {
   Indi_TMA_True_Params_M1() : Indi_TMA_True_Params(indi_tmat_defaults, PERIOD_M1) {
     atr_multiplier = 2.5;
-    atr_period = 24.0;
+    atr_period = 26;
     atr_tf = 0.0;
     bars_to_process = 4.0;
     half_length = 4.0;
@@ -22,7 +22,7 @@ struct Stg_TMA_True_Params_M1 : StgParams {
     lot_size = 0;
     signal_open_method = 0;
     signal_open_filter = 1;
-    signal_open_level = (float)0;
+    signal_open_level = (float)0.0;
     signal_open_boost = 0;
     signal_close_method = 0;
     signal_close_level = (float)0;
