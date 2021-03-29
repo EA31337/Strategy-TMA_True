@@ -16,7 +16,7 @@ INPUT int TMA_True_PriceStopMethod = 0;                                   // Pri
 INPUT float TMA_True_PriceStopLevel = 2;                                  // Price stop level
 INPUT int TMA_True_TickFilterMethod = 1;                                  // Tick filter method (0-255)
 INPUT float TMA_True_MaxSpread = 4.0;                                     // Max spread to trade (in pips)
-INPUT int TMA_True_Shift = 0;             // Shift (relative to the current bar, 0 - default)
+INPUT short TMA_True_Shift = 0;           // Shift (relative to the current bar, 0 - default)
 INPUT int TMA_True_OrderCloseTime = -20;  // Order close time in mins (>0) or bars (<0)
 INPUT string __TMA_True_Indi_TMA_True_Params__ =
     "-- TMA True: TMA True indicator params --";          // >>> TMA True strategy: TMA True indicator <<<
