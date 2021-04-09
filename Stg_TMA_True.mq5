@@ -37,6 +37,13 @@ input bool Info_On_Chart = true;          // Display info on chart.
 #endif
 #property link ea_link
 
+// External resources.
+#ifdef __MQL4__
+#resource "Indicators/Indi_TMA_True.ex4"
+#else
+#resource "Indicators/Indi_TMA_True.ex5"
+#endif
+
 // Class variables.
 EA *ea;
 
