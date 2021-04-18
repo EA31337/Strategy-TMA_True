@@ -92,7 +92,7 @@ class Stg_TMA_True : public Strategy {
    * Check strategy's opening signal.
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, float _level = 0.0f, int _shift = 0) {
-    Indicator *_indi = Data();
+    Indicator *_indi = GetIndicator();
     Chart *_chart = sparams.GetChart();
     bool _is_valid = _indi[CURR].IsValid();
     bool _result = _is_valid;
@@ -140,7 +140,7 @@ class Stg_TMA_True : public Strategy {
    * Gets price stop value for profit take or stop loss.
    */
   float PriceStop(ENUM_ORDER_TYPE _cmd, ENUM_ORDER_TYPE_VALUE _mode, int _method = 0, float _level = 0.0f) {
-    Indi_TMA_True *_indi = Data();
+    Indi_TMA_True *_indi = GetIndicator();
     double _trail = _level * Market().GetPipSize();
     // int _bar_count = (int)_level * 10;
     int _direction = Order::OrderDirection(_cmd, _mode);
