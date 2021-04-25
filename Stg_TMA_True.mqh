@@ -65,7 +65,7 @@ struct Stg_TMA_True_Params {
 
 class Stg_TMA_True : public Strategy {
  public:
-  Stg_TMA_True(StgParams &_params, string _name) : Strategy(_params, _name) {}
+  Stg_TMA_True(StgParams &_params, Trade *_trade = NULL, string _name = "") : Strategy(_params, _trade, _name) {}
 
   static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL, long _magic_no = NULL, ENUM_LOG_LEVEL _log_level = V_INFO) {
     // Initialize strategy initial values.
@@ -79,12 +79,9 @@ class Stg_TMA_True : public Strategy {
 #endif
     // Initialize indicator.
     _stg_params.SetIndicator(new Indi_TMA_True(_indi_params));
-    // Initialize strategy parameters.
-    _stg_params.GetLog().SetLevel(_log_level);
-    _stg_params.SetMagicNo(_magic_no);
-    _stg_params.SetTf(_tf, _Symbol);
-    // Initialize strategy instance.
-    Strategy *_strat = new Stg_TMA_True(_stg_params, "TMA True");
+    // Initialize Strategy instance.
+    TradeParams _tparams(_magic_no, _log_level);
+    Strategy *_strat = new Stg_TMA_True(_stg_params, new Trade(new Chart(_tf, _Symbol)), "TMA True");
     return _strat;
   }
 
@@ -93,7 +90,7 @@ class Stg_TMA_True : public Strategy {
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, float _level = 0.0f, int _shift = 0) {
     Indicator *_indi = GetIndicator();
-    Chart *_chart = sparams.GetChart();
+    Chart *_chart = trade.GetChart();
     bool _is_valid = _indi[CURR].IsValid();
     bool _result = _is_valid;
     if (!_result) {
