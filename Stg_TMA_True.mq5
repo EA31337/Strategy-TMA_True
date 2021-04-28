@@ -34,11 +34,9 @@ input bool Info_On_Chart = true;          // Display info on chart.
 #endif
 #property link ea_link
 
-// External resources.
+// Load external resources.
 #ifdef __resource__
-#ifdef __MQL4__
-#resource "Indicators/Indi_TMA_True.ex4"
-#else
+#ifdef __MQL5__
 #resource "Indicators/Indi_TMA_True.ex5"
 #endif
 #endif
