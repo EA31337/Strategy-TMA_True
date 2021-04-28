@@ -3,7 +3,6 @@
  * Implements TMA_True strategy based on the TMA_True indicator.
  */
 
-
 // Includes.
 #include "Indi_TMA_True.mqh"
 
