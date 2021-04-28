@@ -3,6 +3,10 @@
  * Implements TMA_True strategy based on the TMA_True indicator.
  */
 
+
+// Includes.
+#include "Indi_TMA_True.mqh"
+
 // User input params.
 INPUT string __TMA_True_Parameters__ = "-- TMA True strategy params --";  // >>> TMA True <<<
 INPUT float TMA_True_LotSize = 0;                                         // Lot size
@@ -28,14 +32,6 @@ INPUT int TMA_True_Indi_TMA_True_BarsToProcess = 0;       // Bars to process
 INPUT int TMA_True_Indi_TMA_True_Shift = 0;               // Indicator Shift
 
 // Structs.
-
-// Defines struct with default user indicator values.
-struct Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
-  Indi_TMA_True_Params_Defaults()
-      : Indi_TMA_True_Params(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
-                             ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
-                             ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift) {}
-} indi_tmat_defaults;
 
 // Defines struct with default user strategy values.
 struct Stg_TMA_True_Params_Defaults : StgParams {

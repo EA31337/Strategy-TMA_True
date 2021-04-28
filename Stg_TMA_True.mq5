@@ -11,9 +11,6 @@
 #include <EA31337-classes/Indicator.mqh>
 #include <EA31337-classes/Strategy.mqh>
 
-// Includes.
-#include "Indi_TMA_True.mqh"
-
 // Inputs.
 input int Active_Tfs = 15;                // Activated timeframes (1-255) [M1=1,M5=2,M15=4,M30=8,H1=16,H4=32,H8=64...]
 input ENUM_LOG_LEVEL Log_Level = V_INFO;  // Log level.
