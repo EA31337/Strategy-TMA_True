@@ -23,6 +23,7 @@ jobs:
       - name: Enables optimization mode
         run: echo '#define __input__' > config/define.h
       - name: Enables resource mode
+        if: false
         run: echo '#define __resource__' >> config/define.h
       - name: Compile strategy for MQL4
         uses: fx31337/mql-compile-action@master
