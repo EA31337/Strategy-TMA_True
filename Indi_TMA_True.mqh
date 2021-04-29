@@ -117,7 +117,7 @@ class Indi_TMA_True : public Indicator {
     switch (params.idstype) {
       case IDATA_ICUSTOM:
         _value =
-            iCustom(istate.handle, GetSymbol(), GetTf(), params.custom_indi_name, params.tf, params.GetHalfLength(),
+            iCustom(istate.handle, Get<string>(CHART_PARAM_SYMBOL), Get<ENUM_TIMEFRAMES>(CHART_PARAM_TF), params.custom_indi_name, params.tf.GetTf(), params.GetHalfLength(),
                     params.GetAtrMultiplier(), params.GetAtrPeriod(), params.GetBarsToProcess(), _mode, _shift);
         break;
       default:
