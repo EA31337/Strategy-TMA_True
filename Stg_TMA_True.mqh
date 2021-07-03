@@ -9,13 +9,13 @@
 // User input params.
 INPUT string __TMA_True_Parameters__ = "-- TMA True strategy params --";  // >>> TMA True <<<
 INPUT float TMA_True_LotSize = 0;                                         // Lot size
-INPUT int TMA_True_SignalOpenMethod = 0;                                  // Signal open method
-INPUT int TMA_True_SignalOpenFilterMethod = 1;                            // Signal open filter method
+INPUT int TMA_True_SignalOpenMethod = 2;                                  // Signal open method
+INPUT int TMA_True_SignalOpenFilterMethod = 32;                            // Signal open filter method
 INPUT float TMA_True_SignalOpenLevel = 0.0f;                              // Signal open level
 INPUT int TMA_True_SignalOpenBoostMethod = 0;                             // Signal open boost method
-INPUT int TMA_True_SignalCloseMethod = 0;                                 // Signal close method
+INPUT int TMA_True_SignalCloseMethod = 2;                                 // Signal close method
 INPUT float TMA_True_SignalCloseLevel = 0.0f;                             // Signal close level
-INPUT int TMA_True_PriceStopMethod = 0;                                   // Price stop method
+INPUT int TMA_True_PriceStopMethod = 1;                                   // Price stop method
 INPUT float TMA_True_PriceStopLevel = 2;                                  // Price stop level
 INPUT int TMA_True_TickFilterMethod = 1;                                  // Tick filter method (0-255)
 INPUT float TMA_True_MaxSpread = 4.0;                                     // Max spread to trade (in pips)
@@ -128,40 +128,5 @@ class Stg_TMA_True : public Strategy {
         break;
     }
     return _result;
-  }
-
-  /**
-   * Gets price stop value for profit take or stop loss.
-   */
-  float PriceStop(ENUM_ORDER_TYPE _cmd, ENUM_ORDER_TYPE_VALUE _mode, int _method = 0, float _level = 0.0f) {
-    Indi_TMA_True *_indi = GetIndicator();
-    double _trail = _level * Market().GetPipSize();
-    // int _bar_count = (int)_level * 10;
-    int _direction = Order::OrderDirection(_cmd, _mode);
-    double _default_value = Market().GetCloseOffer(_cmd) + _trail * _method * _direction;
-    double _result = _default_value;
-    switch (_method) {
-      case 1:
-        _result = (_direction > 0 ? _indi[CURR][(int)TMA_TRUE_UPPER] : _indi[CURR][(int)TMA_TRUE_LOWER]) +
-                  _trail * _direction;
-        break;
-      case 2:
-        _result = (_direction > 0 ? _indi[PREV][(int)TMA_TRUE_UPPER] : _indi[PREV][(int)TMA_TRUE_LOWER]) +
-                  _trail * _direction;
-        break;
-      case 3:
-        _result = (_direction > 0 ? _indi[PPREV][(int)TMA_TRUE_UPPER] : _indi[PPREV][(int)TMA_TRUE_LOWER]) +
-                  _trail * _direction;
-        break;
-      case 4:
-        _result = (_direction > 0 ? fmax(_indi[PREV][(int)TMA_TRUE_UPPER], _indi[PPREV][(int)TMA_TRUE_UPPER])
-                                  : fmin(_indi[PREV][(int)TMA_TRUE_LOWER], _indi[PPREV][(int)TMA_TRUE_LOWER])) +
-                  _trail * _direction;
-        break;
-      case 5:
-        _result = _indi[CURR][(int)TMA_TRUE_MAIN] + _trail * _direction;
-        break;
-    }
-    return (float)_result;
   }
 };
