@@ -8,5 +8,7 @@
 
 // Load external resources.
 #ifdef __resource__
+#import "::Indicators/Indi_TMA_True.ex4"
+#import
 #resource "Indicators/Indi_TMA_True.ex4"
 #endif
