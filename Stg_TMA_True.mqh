@@ -21,6 +21,8 @@ INPUT float TMA_True_PriceStopLevel = 2;         // Price stop level
 INPUT int TMA_True_TickFilterMethod = 1;         // Tick filter method (0-255)
 INPUT float TMA_True_MaxSpread = 4.0;            // Max spread to trade (in pips)
 INPUT short TMA_True_Shift = 0;                  // Shift (relative to the current bar, 0 - default)
+INPUT int TMA_True_OrderCloseLoss = 0;           // Order close loss
+INPUT int TMA_True_OrderCloseProfit = 0;         // Order close profit
 INPUT int TMA_True_OrderCloseTime = -20;         // Order close time in mins (>0) or bars (<0)
 INPUT_GROUP("TMA True: TMA True indicator params");
 INPUT int TMA_True_Indi_TMA_True_Timeframe = 0;           // Timeframe
@@ -38,7 +40,11 @@ struct Stg_TMA_True_Params_Defaults : StgParams {
       : StgParams(::TMA_True_SignalOpenMethod, ::TMA_True_SignalOpenFilterMethod, ::TMA_True_SignalOpenLevel,
                   ::TMA_True_SignalOpenBoostMethod, ::TMA_True_SignalCloseMethod, ::TMA_True_SignalCloseFilter,
                   ::TMA_True_SignalCloseLevel, ::TMA_True_PriceStopMethod, ::TMA_True_PriceStopLevel,
-                  ::TMA_True_TickFilterMethod, ::TMA_True_MaxSpread, ::TMA_True_Shift, ::TMA_True_OrderCloseTime) {}
+                  ::TMA_True_TickFilterMethod, ::TMA_True_MaxSpread, ::TMA_True_Shift) {
+    Set(STRAT_PARAM_OCL, TMA_True_OrderCloseLoss);
+    Set(STRAT_PARAM_OCP, TMA_True_OrderCloseProfit);
+    Set(STRAT_PARAM_OCT, TMA_True_OrderCloseTime);
+  }
 } stg_tmat_defaults;
 
 // Defines struct to store indicator and strategy: strategy params.
