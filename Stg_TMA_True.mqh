@@ -49,13 +49,13 @@ struct Stg_TMA_True_Params {
 };
 
 // Loads pair specific param values.
-#include "config/EURUSD_H1.h"
-#include "config/EURUSD_H4.h"
-#include "config/EURUSD_H8.h"
-#include "config/EURUSD_M1.h"
-#include "config/EURUSD_M15.h"
-#include "config/EURUSD_M30.h"
-#include "config/EURUSD_M5.h"
+#include "config/H1.h"
+#include "config/H4.h"
+#include "config/H8.h"
+#include "config/M1.h"
+#include "config/M15.h"
+#include "config/M30.h"
+#include "config/M5.h"
 
 class Stg_TMA_True : public Strategy {
  public:
