@@ -14,6 +14,7 @@ INPUT int TMA_True_SignalOpenFilterMethod = 32;  // Signal open filter method
 INPUT float TMA_True_SignalOpenLevel = 0.0f;     // Signal open level
 INPUT int TMA_True_SignalOpenBoostMethod = 0;    // Signal open boost method
 INPUT int TMA_True_SignalCloseMethod = 2;        // Signal close method
+INPUT int TMA_True_SignalCloseFilter = 0;        // Signal close filter (-127-127)
 INPUT float TMA_True_SignalCloseLevel = 0.0f;    // Signal close level
 INPUT int TMA_True_PriceStopMethod = 1;          // Price stop method
 INPUT float TMA_True_PriceStopLevel = 2;         // Price stop level
@@ -35,9 +36,9 @@ INPUT int TMA_True_Indi_TMA_True_Shift = 0;               // Indicator Shift
 struct Stg_TMA_True_Params_Defaults : StgParams {
   Stg_TMA_True_Params_Defaults()
       : StgParams(::TMA_True_SignalOpenMethod, ::TMA_True_SignalOpenFilterMethod, ::TMA_True_SignalOpenLevel,
-                  ::TMA_True_SignalOpenBoostMethod, ::TMA_True_SignalCloseMethod, ::TMA_True_SignalCloseLevel,
-                  ::TMA_True_PriceStopMethod, ::TMA_True_PriceStopLevel, ::TMA_True_TickFilterMethod,
-                  ::TMA_True_MaxSpread, ::TMA_True_Shift, ::TMA_True_OrderCloseTime) {}
+                  ::TMA_True_SignalOpenBoostMethod, ::TMA_True_SignalCloseMethod, ::TMA_True_SignalCloseFilter,
+                  ::TMA_True_SignalCloseLevel, ::TMA_True_PriceStopMethod, ::TMA_True_PriceStopLevel,
+                  ::TMA_True_TickFilterMethod, ::TMA_True_MaxSpread, ::TMA_True_Shift, ::TMA_True_OrderCloseTime) {}
 } stg_tmat_defaults;
 
 // Defines struct to store indicator and strategy: strategy params.
