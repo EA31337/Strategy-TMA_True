@@ -14,7 +14,7 @@
 #property indicator_width3 1
 #property indicator_style1 STYLE_DOT
 #property indicator_style2 STYLE_SOLID
-#property indicator_style2 STYLE_SOLID
+#property indicator_style3 STYLE_SOLID
 
 //---- input parameters
 extern int eintTimeframe = 0;
