@@ -9,22 +9,22 @@
 // User input params.
 INPUT_GROUP("TMA True strategy: strategy params");
 INPUT float TMA_True_LotSize = 0;                // Lot size
-INPUT int TMA_True_SignalOpenMethod = 2;         // Signal open method
+INPUT int TMA_True_SignalOpenMethod = 0;         // Signal open method
 INPUT int TMA_True_SignalOpenFilterMethod = 32;  // Signal open filter method
 INPUT int TMA_True_SignalOpenFilterTime = 6;     // Signal open filter time
 INPUT float TMA_True_SignalOpenLevel = 0.0f;     // Signal open level
 INPUT int TMA_True_SignalOpenBoostMethod = 0;    // Signal open boost method
-INPUT int TMA_True_SignalCloseMethod = 2;        // Signal close method
-INPUT int TMA_True_SignalCloseFilter = 0;        // Signal close filter (-127-127)
+INPUT int TMA_True_SignalCloseMethod = 0;        // Signal close method
+INPUT int TMA_True_SignalCloseFilter = 32;       // Signal close filter (-127-127)
 INPUT float TMA_True_SignalCloseLevel = 0.0f;    // Signal close level
-INPUT int TMA_True_PriceStopMethod = 1;          // Price stop method
+INPUT int TMA_True_PriceStopMethod = 1;          // Price stop method (0-127)
 INPUT float TMA_True_PriceStopLevel = 2;         // Price stop level
 INPUT int TMA_True_TickFilterMethod = 1;         // Tick filter method (0-255)
 INPUT float TMA_True_MaxSpread = 4.0;            // Max spread to trade (in pips)
 INPUT short TMA_True_Shift = 0;                  // Shift (relative to the current bar, 0 - default)
 INPUT int TMA_True_OrderCloseLoss = 0;           // Order close loss
 INPUT int TMA_True_OrderCloseProfit = 0;         // Order close profit
-INPUT int TMA_True_OrderCloseTime = -20;         // Order close time in mins (>0) or bars (<0)
+INPUT int TMA_True_OrderCloseTime = -30;         // Order close time in mins (>0) or bars (<0)
 INPUT_GROUP("TMA True: TMA True indicator params");
 INPUT int TMA_True_Indi_TMA_True_Timeframe = 0;           // Timeframe
 INPUT int TMA_True_Indi_TMA_True_HalfLength = 3;          // Half length
