@@ -25,6 +25,14 @@
 // Defines macros.
 #define Bars (ChartStatic::iBars(_Symbol, _Period))
 
+// Custom indicator initialization function.
+void OnInit() {
+  init();
+  PlotIndexSetInteger(0, PLOT_DRAW_BEGIN, 0);
+  PlotIndexSetInteger(1, PLOT_DRAW_BEGIN, 0);
+  PlotIndexSetInteger(2, PLOT_DRAW_BEGIN, 0);
+}
+
 // Custom indicator iteration function.
 int OnCalculate(const int rates_total, const int prev_calculated, const int begin, const double &price[]) {
   if (!ArrayGetAsSeries(gadblMid)) {
@@ -32,9 +40,6 @@ int OnCalculate(const int rates_total, const int prev_calculated, const int begi
     ArraySetAsSeries(gadblUpper, true);
     ArraySetAsSeries(gadblLower, true);
   }
-  if (begin > 0) PlotIndexSetInteger(0, PLOT_DRAW_BEGIN, begin);
-  if (begin > 0) PlotIndexSetInteger(1, PLOT_DRAW_BEGIN, begin);
-  if (begin > 0) PlotIndexSetInteger(2, PLOT_DRAW_BEGIN, begin);
   int pos = fmax(0, prev_calculated - 1);
   IndicatorCounted(prev_calculated);
   start();
