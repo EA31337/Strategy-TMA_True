@@ -49,21 +49,13 @@ struct Stg_TMA_True_Params_Defaults : StgParams {
   }
 } stg_tmat_defaults;
 
-// Defines struct to store indicator and strategy: strategy params.
-struct Stg_TMA_True_Params {
-  StgParams sparams;
-
-  // Struct constructors.
-  Stg_TMA_True_Params(StgParams &_sparams) : sparams(stg_tmat_defaults) { sparams = _sparams; }
-};
-
 // Defines struct with default user indicator values.
-struct Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
-  Indi_TMA_True_Params_Defaults()
+struct Stg_TMA_True_Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
+  Stg_TMA_True_Indi_TMA_True_Params_Defaults()
       : Indi_TMA_True_Params(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
                              ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
                              ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift) {}
-} indi_tmat_defaults;
+} stg_tmat_indi_tmat_defaults;
 
 #ifdef __config__
 // Loads pair specific param values.
@@ -83,7 +75,7 @@ class Stg_TMA_True : public Strategy {
 
   static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL, long _magic_no = NULL, ENUM_LOG_LEVEL _log_level = V_INFO) {
     // Initialize strategy initial values.
-    Indi_TMA_True_Params _indi_params(indi_tmat_defaults, _tf);
+    Indi_TMA_True_Params _indi_params(stg_tmat_indi_tmat_defaults, _tf);
     StgParams _stg_params(stg_tmat_defaults);
 #ifdef __config__
     SetParamsByTf<Indi_TMA_True_Params>(_indi_params, _tf, indi_tmat_m1, indi_tmat_m5, indi_tmat_m15, indi_tmat_m30,
