@@ -7,15 +7,21 @@
 #property indicator_chart_window
 #property indicator_buffers 3
 #property indicator_plots 3
-#property indicator_color1 DarkGray
-#property indicator_color2 DarkGray
-#property indicator_color3 DarkGray
-#property indicator_width1 1
-#property indicator_width2 1
-#property indicator_width3 1
+#property indicator_color1 LightSeaGreen
+#property indicator_color2 LightSeaGreen
+#property indicator_color3 LightSeaGreen
+#property indicator_label1 "TMATrue middle"
+#property indicator_label2 "TMATrue upper"
+#property indicator_label3 "TMATrue lower"
+#property indicator_type1   DRAW_LINE
+#property indicator_type2   DRAW_LINE
+#property indicator_type3   DRAW_LINE
 #property indicator_style1 STYLE_DOT
 #property indicator_style2 STYLE_SOLID
 #property indicator_style3 STYLE_SOLID
+#property indicator_width1 1
+#property indicator_width2 1
+#property indicator_width3 1
 
 // Includes EA31337 framework.
 #include <EA31337-classes/Draw.mqh>
@@ -31,9 +37,12 @@
 // Custom indicator initialization function.
 void OnInit() {
   init();
-  PlotIndexSetInteger(0, PLOT_DRAW_BEGIN, 0);
-  PlotIndexSetInteger(1, PLOT_DRAW_BEGIN, 0);
-  PlotIndexSetInteger(2, PLOT_DRAW_BEGIN, 0);
+  PlotIndexSetInteger(0, PLOT_DRAW_BEGIN, eintAtrPeriod);
+  PlotIndexSetInteger(1, PLOT_DRAW_BEGIN, eintAtrPeriod);
+  PlotIndexSetInteger(2, PLOT_DRAW_BEGIN, eintAtrPeriod);
+  PlotIndexSetString(0, PLOT_LABEL,"TMATrue Middle");
+  PlotIndexSetString(1, PLOT_LABEL,"TMATrue Upper");
+  PlotIndexSetString(2, PLOT_LABEL,"TMATrue Lower");
   if (!ArrayGetAsSeries(gadblMid)) {
     ArraySetAsSeries(gadblMid, true);
     ArraySetAsSeries(gadblUpper, true);
