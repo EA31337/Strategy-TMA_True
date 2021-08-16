@@ -625,7 +625,7 @@
   [
     {
       "type":"indicator",
-      "path":".\\Indicators\\Indi_TMA_True.ex5",
+      "path":".\\Indicators\\TMA_True.ex5",
       "name":"",
       "relative_to_project":"true"
     }

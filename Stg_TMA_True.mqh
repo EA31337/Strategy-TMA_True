@@ -57,6 +57,14 @@ struct Stg_TMA_True_Params {
   Stg_TMA_True_Params(StgParams &_sparams) : sparams(stg_tmat_defaults) { sparams = _sparams; }
 };
 
+// Defines struct with default user indicator values.
+struct Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
+  Indi_TMA_True_Params_Defaults()
+      : Indi_TMA_True_Params(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
+                             ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
+                             ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift) {}
+} indi_tmat_defaults;
+
 #ifdef __config__
 // Loads pair specific param values.
 #include "config/H1.h"

@@ -35,15 +35,15 @@ input bool Info_On_Chart = true;          // Display info on chart.
 #property link ea_link
 #ifdef __resource__
 #ifdef __MQL5__
-#property tester_indicator "::Indicators\\Indi_TMA_True.ex5"
-#property tester_library "::Indicators\\Indi_TMA_True.ex5"
+#property tester_indicator "::Indicators\\TMA_True.ex5"
+#property tester_library "::Indicators\\TMA_True.ex5"
 #endif
 #endif
 
 // Load external resources.
 #ifdef __resource__
 #ifdef __MQL5__
-#resource "Indicators\\Indi_TMA_True.ex5"
+#resource "Indicators\\TMA_True.ex5"
 #endif
 #endif
 

@@ -13,9 +13,9 @@
 #property indicator_label1 "TMATrue middle"
 #property indicator_label2 "TMATrue upper"
 #property indicator_label3 "TMATrue lower"
-#property indicator_type1   DRAW_LINE
-#property indicator_type2   DRAW_LINE
-#property indicator_type3   DRAW_LINE
+#property indicator_type1 DRAW_LINE
+#property indicator_type2 DRAW_LINE
+#property indicator_type3 DRAW_LINE
 #property indicator_style1 STYLE_DOT
 #property indicator_style2 STYLE_SOLID
 #property indicator_style3 STYLE_SOLID
@@ -32,7 +32,7 @@
 #define Bars (ChartStatic::iBars(_Symbol, _Period))
 
 // Includes the main file.
-#include "Indi_TMA_True.mq4"
+#include "TMA_True.mq4"
 
 // Custom indicator initialization function.
 void OnInit() {
@@ -40,9 +40,9 @@ void OnInit() {
   PlotIndexSetInteger(0, PLOT_DRAW_BEGIN, eintAtrPeriod);
   PlotIndexSetInteger(1, PLOT_DRAW_BEGIN, eintAtrPeriod);
   PlotIndexSetInteger(2, PLOT_DRAW_BEGIN, eintAtrPeriod);
-  PlotIndexSetString(0, PLOT_LABEL,"TMATrue Middle");
-  PlotIndexSetString(1, PLOT_LABEL,"TMATrue Upper");
-  PlotIndexSetString(2, PLOT_LABEL,"TMATrue Lower");
+  PlotIndexSetString(0, PLOT_LABEL, "TMATrue Middle");
+  PlotIndexSetString(1, PLOT_LABEL, "TMATrue Upper");
+  PlotIndexSetString(2, PLOT_LABEL, "TMATrue Lower");
   if (!ArrayGetAsSeries(gadblMid)) {
     ArraySetAsSeries(gadblMid, true);
     ArraySetAsSeries(gadblUpper, true);

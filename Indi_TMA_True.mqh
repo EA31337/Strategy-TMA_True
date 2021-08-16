@@ -19,6 +19,10 @@
  *
  */
 
+// Prevents processing the same indicator file twice.
+#ifndef INDI_TMA_TRUE_MQH
+#define INDI_TMA_TRUE_MQH
+
 // Indicator line identifiers used in the indicator.
 enum ENUM_TMA_TRUE_MODE {
   TMA_TRUE_MAIN = 0,   // Main line.
@@ -38,8 +42,8 @@ struct Indi_TMA_True_Params : public IndicatorParams {
   int atr_period;
   int bars_to_process;
   // Struct constructors.
-  void Indi_TMA_True_Params(int _atr_tf, int _half_length, double _atr_multiplier, int _atr_period,
-                            int _bars_to_process, int _shift)
+  Indi_TMA_True_Params(int _atr_tf, int _half_length, double _atr_multiplier, int _atr_period, int _bars_to_process,
+                       int _shift)
       : atr_tf(_atr_tf),
         half_length(_half_length),
         atr_multiplier(_atr_multiplier),
@@ -47,16 +51,17 @@ struct Indi_TMA_True_Params : public IndicatorParams {
         bars_to_process(_bars_to_process) {
     max_modes = FINAL_TMA_TRUE_MODE_ENTRY;
 #ifdef __resource__
-    custom_indi_name = "::Indicators\\Indi_TMA_True";
+    custom_indi_name = "::Indicators\\TMA_True";
 #else
-    custom_indi_name = "Indi_TMA_True";
+    custom_indi_name = "TMA_True";
 #endif
     SetDataSourceType(IDATA_ICUSTOM);
     SetDataValueType(TYPE_DOUBLE);
   };
-  void Indi_TMA_True_Params(Indi_TMA_True_Params &_params, ENUM_TIMEFRAMES _tf) {
+
+  Indi_TMA_True_Params(Indi_TMA_True_Params &_params, ENUM_TIMEFRAMES _tf) {
     this = _params;
-    _params.tf = _tf;
+    tf = _tf;
   }
   // Getters.
   int GetATRTimeframe() { return atr_tf; }
@@ -72,14 +77,6 @@ struct Indi_TMA_True_Params : public IndicatorParams {
   void SetBarsToProcess(int _value) { bars_to_process = _value; }
 };
 
-// Defines struct with default user indicator values.
-struct Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
-  Indi_TMA_True_Params_Defaults()
-      : Indi_TMA_True_Params(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
-                             ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
-                             ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift) {}
-} indi_tmat_defaults;
-
 /**
  * Implements indicator class.
  */
@@ -93,14 +90,10 @@ class Indi_TMA_True : public Indicator {
    */
   Indi_TMA_True(Indi_TMA_True_Params &_p)
       : params(_p.atr_tf, _p.half_length, _p.atr_multiplier, _p.atr_period, _p.bars_to_process, _p.shift),
-        Indicator((IndicatorParams)_p) {
-    params = _p;
-  }
+        Indicator((IndicatorParams)_p) {}
   Indi_TMA_True(Indi_TMA_True_Params &_p, ENUM_TIMEFRAMES _tf)
       : params(_p.atr_tf, _p.half_length, _p.atr_multiplier, _p.atr_period, _p.bars_to_process, _p.shift),
-        Indicator(NULL, _tf) {
-    params = _p;
-  }
+        Indicator((IndicatorParams)_p, _tf) {}
 
   /**
    * Gets indicator's params.
@@ -116,9 +109,10 @@ class Indi_TMA_True : public Indicator {
     double _value = EMPTY_VALUE;
     switch (params.idstype) {
       case IDATA_ICUSTOM:
-        _value = iCustom(istate.handle, Get<string>(CHART_PARAM_SYMBOL), Get<ENUM_TIMEFRAMES>(CHART_PARAM_TF),
-                         params.custom_indi_name, (int)params.tf.GetTf(), params.GetHalfLength(), params.GetAtrMultiplier(),
-                         params.GetAtrPeriod(), params.GetBarsToProcess(), false, _mode, _shift);
+        _value =
+            iCustom(istate.handle, Get<string>(CHART_PARAM_SYMBOL), Get<ENUM_TIMEFRAMES>(CHART_PARAM_TF),
+                    params.custom_indi_name, (int)params.tf.GetTf(), params.GetHalfLength(), params.GetAtrMultiplier(),
+                    params.GetAtrPeriod(), params.GetBarsToProcess(), false, _mode, _shift);
         break;
       default:
         SetUserError(ERR_USER_NOT_SUPPORTED);
@@ -153,3 +147,5 @@ class Indi_TMA_True : public Indicator {
     return _entry;
   }
 };
+
+#endif  // INDI_TMA_TRUE_MQH

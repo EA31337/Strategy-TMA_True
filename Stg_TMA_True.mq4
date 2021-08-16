@@ -8,5 +8,5 @@
 
 // Load external resources.
 #ifdef __resource__
-#resource "Indicators\\Indi_TMA_True.ex4"
+#resource "Indicators\\TMA_True.ex4"
 #endif
