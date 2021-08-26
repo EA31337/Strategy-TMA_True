@@ -11,7 +11,7 @@ INPUT_GROUP("TMA True strategy: strategy params");
 INPUT float TMA_True_LotSize = 0;                // Lot size
 INPUT int TMA_True_SignalOpenMethod = 0;         // Signal open method
 INPUT int TMA_True_SignalOpenFilterMethod = 32;  // Signal open filter method
-INPUT int TMA_True_SignalOpenFilterTime = 6;     // Signal open filter time
+INPUT int TMA_True_SignalOpenFilterTime = 10;    // Signal open filter time
 INPUT float TMA_True_SignalOpenLevel = 0.0f;     // Signal open level
 INPUT int TMA_True_SignalOpenBoostMethod = 0;    // Signal open boost method
 INPUT int TMA_True_SignalCloseMethod = 0;        // Signal close method
