@@ -73,7 +73,7 @@ class Stg_TMA_True : public Strategy {
   Stg_TMA_True(StgParams &_sparams, TradeParams &_tparams, ChartParams &_cparams, string _name = "")
       : Strategy(_sparams, _tparams, _cparams, _name) {}
 
-  static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL, long _magic_no = NULL, ENUM_LOG_LEVEL _log_level = V_INFO) {
+  static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL) {
     // Initialize strategy initial values.
     Indi_TMA_True_Params _indi_params(stg_tmat_indi_tmat_defaults, _tf);
     StgParams _stg_params(stg_tmat_defaults);
@@ -87,7 +87,7 @@ class Stg_TMA_True : public Strategy {
     _stg_params.SetIndicator(new Indi_TMA_True(_indi_params));
     // Initialize Strategy instance.
     ChartParams _cparams(_tf, _Symbol);
-    TradeParams _tparams(_magic_no, _log_level);
+    TradeParams _tparams;
     Strategy *_strat = new Stg_TMA_True(_stg_params, _tparams, _cparams, "TMA True");
     return _strat;
   }
