@@ -42,6 +42,7 @@ struct Stg_TMA_True_Params_Defaults : StgParams {
                   ::TMA_True_SignalOpenBoostMethod, ::TMA_True_SignalCloseMethod, ::TMA_True_SignalCloseFilter,
                   ::TMA_True_SignalCloseLevel, ::TMA_True_PriceStopMethod, ::TMA_True_PriceStopLevel,
                   ::TMA_True_TickFilterMethod, ::TMA_True_MaxSpread, ::TMA_True_Shift) {
+    Set(STRAT_PARAM_LS, TMA_True_LotSize);
     Set(STRAT_PARAM_OCL, TMA_True_OrderCloseLoss);
     Set(STRAT_PARAM_OCP, TMA_True_OrderCloseProfit);
     Set(STRAT_PARAM_OCT, TMA_True_OrderCloseTime);
