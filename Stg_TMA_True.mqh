@@ -48,7 +48,7 @@ struct Stg_TMA_True_Params_Defaults : StgParams {
     Set(STRAT_PARAM_OCT, TMA_True_OrderCloseTime);
     Set(STRAT_PARAM_SOFT, TMA_True_SignalOpenFilterTime);
   }
-} stg_tmat_defaults;
+};
 
 // Defines struct with default user indicator values.
 struct Stg_TMA_True_Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
@@ -77,6 +77,7 @@ class Stg_TMA_True : public Strategy {
   static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL) {
     // Initialize strategy initial values.
     Indi_TMA_True_Params _indi_params(stg_tmat_indi_tmat_defaults, _tf);
+    Stg_TMA_True_Params_Defaults stg_tmat_defaults;
     StgParams _stg_params(stg_tmat_defaults);
 #ifdef __config__
     SetParamsByTf<Indi_TMA_True_Params>(_indi_params, _tf, indi_tmat_m1, indi_tmat_m5, indi_tmat_m15, indi_tmat_m30,
