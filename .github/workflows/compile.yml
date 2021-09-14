@@ -32,7 +32,8 @@ jobs:
           ref: dev
           repository: EA31337/EA31337-classes
       - name: Enables resource mode
-        run: echo '#define __resource__' >> config/define.h
+        if: false
+        run: echo "#define __resource__" >> config/define.h
       - name: Compile strategy for MQL4
         uses: fx31337/mql-compile-action@master
         with:
