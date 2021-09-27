@@ -86,11 +86,11 @@ class Stg_TMA_True : public Strategy {
                              stg_tmat_h4, stg_tmat_h8);
 #endif
     // Initialize indicator.
-    _stg_params.SetIndicator(new Indi_TMA_True(_indi_params));
     // Initialize Strategy instance.
     ChartParams _cparams(_tf, _Symbol);
     TradeParams _tparams;
     Strategy *_strat = new Stg_TMA_True(_stg_params, _tparams, _cparams, "TMA True");
+    _strat.SetIndicator(new Indi_TMA_True(_indi_params));
     return _strat;
   }
 
