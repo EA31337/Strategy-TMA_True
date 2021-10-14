@@ -98,7 +98,7 @@ class Stg_TMA_True : public Strategy {
    * Check strategy's opening signal.
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, float _level = 0.0f, int _shift = 0) {
-    Indicator *_indi = GetIndicator();
+    Indi_TMA_True *_indi = GetIndicator();
     Chart *_chart = trade.GetChart();
     bool _result = _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _shift);
     if (!_result) {
