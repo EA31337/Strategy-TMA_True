@@ -51,7 +51,7 @@ struct Indi_TMA_True_Params : public IndicatorParams {
         bars_to_process(_bars_to_process),
         IndicatorParams(INDI_TMA_TRUE, FINAL_TMA_TRUE_MODE_ENTRY, TYPE_DOUBLE) {
 #ifdef __resource__
-    custom_indi_name = "::Indicators\\TMA_True.ex5";
+    custom_indi_name = "::Indicators\\TMA_True";
 #else
     custom_indi_name = "TMA_True";
 #endif

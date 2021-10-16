@@ -36,7 +36,7 @@ jobs:
           path: Indicators/Include/EA31337-classes
           ref: dev
           repository: EA31337/EA31337-classes
-      - name: Enables optimization mode
+      - name: Enables input mode
         run: echo '#define __input__' > config/define.h
       - name: Enables resource mode
         run: echo '#define __resource__' >> config/define.h
