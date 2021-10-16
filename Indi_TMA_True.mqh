@@ -51,7 +51,7 @@ struct Indi_TMA_True_Params : public IndicatorParams {
         bars_to_process(_bars_to_process),
         IndicatorParams(INDI_TMA_TRUE, FINAL_TMA_TRUE_MODE_ENTRY, TYPE_DOUBLE) {
 #ifdef __resource__
-    custom_indi_name = "::Indicators\\TMA_True";
+    custom_indi_name = "::Indicators\\TMA_True.ex5";
 #else
     custom_indi_name = "TMA_True";
 #endif
@@ -97,7 +97,7 @@ class Indi_TMA_True : public Indicator<Indi_TMA_True_Params> {
    * Returns the indicator's value.
    *
    */
-  double GetValue(ENUM_TMA_TRUE_MODE _mode, int _shift = 0) {
+  virtual double GetValue(int _mode = 0, int _shift = 0) {
     ResetLastError();
     double _value = EMPTY_VALUE;
     switch (iparams.idstype) {
