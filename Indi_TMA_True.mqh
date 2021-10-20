@@ -103,7 +103,7 @@ class Indi_TMA_True : public Indicator<Indi_TMA_True_Params> {
     switch (iparams.idstype) {
       case IDATA_ICUSTOM:
         _value = iCustom(istate.handle, Get<string>(CHART_PARAM_SYMBOL), Get<ENUM_TIMEFRAMES>(CHART_PARAM_TF),
-                         iparams.custom_indi_name, (int)iparams.tf.GetTf(), iparams.GetHalfLength(),
+                         iparams.custom_indi_name, Get<ENUM_TIMEFRAMES>(CHART_PARAM_TF), iparams.GetHalfLength(),
                          iparams.GetAtrMultiplier(), iparams.GetAtrPeriod(), iparams.GetBarsToProcess(), false, _mode,
                          _shift);
         break;

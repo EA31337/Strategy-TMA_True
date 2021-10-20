@@ -90,7 +90,7 @@ class Stg_TMA_True : public Strategy {
     ChartParams _cparams(_tf, _Symbol);
     TradeParams _tparams;
     Strategy *_strat = new Stg_TMA_True(_stg_params, _tparams, _cparams, "TMA True");
-    _strat.SetIndicator(new Indi_TMA_True(_indi_params));
+    _strat.SetIndicator(new Indi_TMA_True(_indi_params), INDI_TMA_TRUE);
     return _strat;
   }
 
@@ -98,7 +98,7 @@ class Stg_TMA_True : public Strategy {
    * Check strategy's opening signal.
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, float _level = 0.0f, int _shift = 0) {
-    Indi_TMA_True *_indi = GetIndicator();
+    Indi_TMA_True *_indi = GetIndicator(INDI_TMA_TRUE);
     Chart *_chart = trade.GetChart();
     bool _result = _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _shift);
     if (!_result) {
