@@ -110,31 +110,41 @@ class Stg_TMA_True : public Strategy {
     switch (_cmd) {
       case ORDER_TYPE_BUY:
         lowest_price = fmin3(_chart.GetLow(CURR), _chart.GetLow(PREV), _chart.GetLow(PPREV));
-        _result = (lowest_price < fmax3(_indi[CURR][(int)TMA_TRUE_LOWER], _indi[PREV][(int)TMA_TRUE_LOWER],
-                                        _indi[PPREV][(int)TMA_TRUE_LOWER]));
+        _result = (lowest_price < fmax3(_indi[_shift][(int)TMA_TRUE_LOWER], _indi[_shift + 1][(int)TMA_TRUE_LOWER],
+                                        _indi[_shift + 2][(int)TMA_TRUE_LOWER]));
         _result &= _change_pc > _level;
         if (_method != 0) {
-          if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR][(int)TMA_TRUE_LOWER];
-          if (METHOD(_method, 1)) _result &= (_indi[CURR][(int)TMA_TRUE_LOWER] > _indi[PPREV][(int)TMA_TRUE_LOWER]);
-          if (METHOD(_method, 2)) _result &= (_indi[CURR][(int)TMA_TRUE_MAIN] > _indi[PPREV][(int)TMA_TRUE_MAIN]);
-          if (METHOD(_method, 3)) _result &= (_indi[CURR][(int)TMA_TRUE_UPPER] > _indi[PPREV][(int)TMA_TRUE_UPPER]);
-          if (METHOD(_method, 4)) _result &= Open[CURR] < _indi[CURR][(int)TMA_TRUE_MAIN];
-          if (METHOD(_method, 5)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR][(int)TMA_TRUE_MAIN];
+          if (METHOD(_method, 0))
+            _result &= fmin(Close[_shift + 1], Close[_shift + 2]) < _indi[_shift][(int)TMA_TRUE_LOWER];
+          if (METHOD(_method, 1))
+            _result &= (_indi[_shift][(int)TMA_TRUE_LOWER] > _indi[_shift + 2][(int)TMA_TRUE_LOWER]);
+          if (METHOD(_method, 2))
+            _result &= (_indi[_shift][(int)TMA_TRUE_MAIN] > _indi[_shift + 2][(int)TMA_TRUE_MAIN]);
+          if (METHOD(_method, 3))
+            _result &= (_indi[_shift][(int)TMA_TRUE_UPPER] > _indi[_shift + 2][(int)TMA_TRUE_UPPER]);
+          if (METHOD(_method, 4)) _result &= Open[_shift] < _indi[_shift][(int)TMA_TRUE_MAIN];
+          if (METHOD(_method, 5))
+            _result &= fmin(Close[_shift + 1], Close[_shift + 2]) > _indi[_shift][(int)TMA_TRUE_MAIN];
         }
         break;
       case ORDER_TYPE_SELL:
         // Price value was higher than the upper band.
         highest_price = fmin3(_chart.GetHigh(CURR), _chart.GetHigh(PREV), _chart.GetHigh(PPREV));
-        _result = (highest_price > fmin3(_indi[CURR][(int)TMA_TRUE_UPPER], _indi[PREV][(int)TMA_TRUE_UPPER],
-                                         _indi[PPREV][(int)TMA_TRUE_UPPER]));
+        _result = (highest_price > fmin3(_indi[_shift][(int)TMA_TRUE_UPPER], _indi[_shift + 1][(int)TMA_TRUE_UPPER],
+                                         _indi[_shift + 2][(int)TMA_TRUE_UPPER]));
         _result &= _change_pc < -_level;
         if (_method != 0) {
-          if (METHOD(_method, 0)) _result &= fmin(Close[PREV], Close[PPREV]) > _indi[CURR][(int)TMA_TRUE_UPPER];
-          if (METHOD(_method, 1)) _result &= (_indi[CURR][(int)TMA_TRUE_LOWER] < _indi[PPREV][(int)TMA_TRUE_LOWER]);
-          if (METHOD(_method, 2)) _result &= (_indi[CURR][(int)TMA_TRUE_MAIN] < _indi[PPREV][(int)TMA_TRUE_MAIN]);
-          if (METHOD(_method, 3)) _result &= (_indi[CURR][(int)TMA_TRUE_UPPER] < _indi[PPREV][(int)TMA_TRUE_UPPER]);
-          if (METHOD(_method, 4)) _result &= Open[CURR] > _indi[CURR][(int)TMA_TRUE_MAIN];
-          if (METHOD(_method, 5)) _result &= fmin(Close[PREV], Close[PPREV]) < _indi[CURR][(int)TMA_TRUE_MAIN];
+          if (METHOD(_method, 0))
+            _result &= fmin(Close[_shift + 1], Close[_shift + 2]) > _indi[_shift][(int)TMA_TRUE_UPPER];
+          if (METHOD(_method, 1))
+            _result &= (_indi[_shift][(int)TMA_TRUE_LOWER] < _indi[_shift + 2][(int)TMA_TRUE_LOWER]);
+          if (METHOD(_method, 2))
+            _result &= (_indi[_shift][(int)TMA_TRUE_MAIN] < _indi[_shift + 2][(int)TMA_TRUE_MAIN]);
+          if (METHOD(_method, 3))
+            _result &= (_indi[_shift][(int)TMA_TRUE_UPPER] < _indi[_shift + 2][(int)TMA_TRUE_UPPER]);
+          if (METHOD(_method, 4)) _result &= Open[_shift] > _indi[_shift][(int)TMA_TRUE_MAIN];
+          if (METHOD(_method, 5))
+            _result &= fmin(Close[_shift + 1], Close[_shift + 2]) < _indi[_shift][(int)TMA_TRUE_MAIN];
         }
         break;
     }
