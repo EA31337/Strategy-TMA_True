@@ -51,11 +51,11 @@ struct Stg_TMA_True_Params_Defaults : StgParams {
 };
 
 // Defines struct with default user indicator values.
-struct Stg_TMA_True_Indi_TMA_True_Params_Defaults : Indi_TMA_True_Params {
-  Stg_TMA_True_Indi_TMA_True_Params_Defaults()
-      : Indi_TMA_True_Params(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
-                             ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
-                             ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift) {}
+struct Stg_TMA_True_IndiTMATrueParams_Defaults : IndiTMATrueParams {
+  Stg_TMA_True_IndiTMATrueParams_Defaults()
+      : IndiTMATrueParams(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
+                          ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
+                          ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift) {}
 } stg_tmat_indi_tmat_defaults;
 
 #ifdef __config__
@@ -76,12 +76,12 @@ class Stg_TMA_True : public Strategy {
 
   static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL) {
     // Initialize strategy initial values.
-    Indi_TMA_True_Params _indi_params(stg_tmat_indi_tmat_defaults, _tf);
+    IndiTMATrueParams _indi_params(stg_tmat_indi_tmat_defaults, _tf);
     Stg_TMA_True_Params_Defaults stg_tmat_defaults;
     StgParams _stg_params(stg_tmat_defaults);
 #ifdef __config__
-    SetParamsByTf<Indi_TMA_True_Params>(_indi_params, _tf, indi_tmat_m1, indi_tmat_m5, indi_tmat_m15, indi_tmat_m30,
-                                        indi_tmat_h1, indi_tmat_h4, indi_tmat_h8);
+    SetParamsByTf<IndiTMATrueParams>(_indi_params, _tf, indi_tmat_m1, indi_tmat_m5, indi_tmat_m15, indi_tmat_m30,
+                                     indi_tmat_h1, indi_tmat_h4, indi_tmat_h8);
     SetParamsByTf<StgParams>(_stg_params, _tf, stg_tmat_m1, stg_tmat_m5, stg_tmat_m15, stg_tmat_m30, stg_tmat_h1,
                              stg_tmat_h4, stg_tmat_h8);
 #endif

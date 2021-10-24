@@ -4,8 +4,8 @@
  */
 
 // Defines indicator's parameter values for the given pair symbol and timeframe.
-struct Indi_TMA_True_Params_M1 : Indi_TMA_True_Params {
-  Indi_TMA_True_Params_M1() : Indi_TMA_True_Params(stg_tmat_indi_tmat_defaults, PERIOD_M1) {
+struct IndiTMATrueParams_M1 : IndiTMATrueParams {
+  IndiTMATrueParams_M1() : IndiTMATrueParams(stg_tmat_indi_tmat_defaults, PERIOD_M1) {
     atr_multiplier = 2.5;
     atr_period = 26;
     atr_tf = 0.0;
