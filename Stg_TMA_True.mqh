@@ -50,14 +50,6 @@ struct Stg_TMA_True_Params_Defaults : StgParams {
   }
 };
 
-// Defines struct with default user indicator values.
-struct Stg_TMA_True_IndiTMATrueParams_Defaults : IndiTMATrueParams {
-  Stg_TMA_True_IndiTMATrueParams_Defaults()
-      : IndiTMATrueParams(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
-                          ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
-                          ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift) {}
-} stg_tmat_indi_tmat_defaults;
-
 #ifdef __config__
 // Loads pair specific param values.
 #include "config/H1.h"
@@ -94,7 +86,10 @@ class Stg_TMA_True : public Strategy {
    * Event on strategy's init.
    */
   void OnInit() {
-    IndiTMATrueParams _indi_params(stg_tmat_indi_tmat_defaults, Get<ENUM_TIMEFRAMES>(STRAT_PARAM_TF));
+    IndiTMATrueParams _indi_params(::TMA_True_Indi_TMA_True_Timeframe, ::TMA_True_Indi_TMA_True_HalfLength,
+                                   ::TMA_True_Indi_TMA_True_AtrMultiplier, ::TMA_True_Indi_TMA_True_AtrPeriod,
+                                   ::TMA_True_Indi_TMA_True_BarsToProcess, ::TMA_True_Indi_TMA_True_Shift);
+    _indi_params.SetTf(Get<ENUM_TIMEFRAMES>(STRAT_PARAM_TF));
     SetIndicator(new Indi_TMA_True(_indi_params), INDI_TMA_TRUE);
   }
 
