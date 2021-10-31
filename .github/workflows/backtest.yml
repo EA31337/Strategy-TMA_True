@@ -33,11 +33,6 @@ jobs:
           path: Include/EA31337-classes
           ref: dev
           repository: EA31337/EA31337-classes
-      - uses: actions/checkout@v2
-        with:
-          path: Indicators/Include/EA31337-classes
-          ref: dev
-          repository: EA31337/EA31337-classes
       - name: Enables input mode
         run: echo '#define __input__' > config/define.h
       - name: Enables resource mode
@@ -50,6 +45,11 @@ jobs:
           mt-version: 5.0.0.2361
           path: Stg_TMA_True.mq4
           verbose: true
+      - uses: actions/checkout@v2
+        with:
+          path: indicators-other/Price/Include/EA31337-classes
+          ref: dev
+          repository: EA31337/EA31337-classes
       - name: Compile strategy for MQL5
         uses: fx31337/mql-compile-action@master
         with:
@@ -69,11 +69,12 @@ jobs:
     defaults:
       run:
         shell: powershell
+        working-directory: indicators-other
     runs-on: windows-latest
     strategy:
       matrix:
         file:
-          - TMA_True
+          - Price/TMA_True
     steps:
       - uses: actions/checkout@v2
         with:
@@ -89,7 +90,7 @@ jobs:
           include: .
           init-platform: true
           mt-version: 5.0.0.2361
-          path: Indicators/${{ matrix.file }}.mq4
+          path: ${{ matrix.file }}.mq4
           verbose: true
       - name: Compile required indicator for MQL5
         uses: fx31337/mql-compile-action@master
@@ -97,7 +98,7 @@ jobs:
           include: .
           init-platform: true
           mt-version: 5.0.0.2515
-          path: Indicators/${{ matrix.file }}.mq5
+          path: ${{ matrix.file }}.mq5
           verbose: true
       - name: List compiled files
         run: '(Get-ChildItem -Recurse -Path . -Include *.ex[45]).fullname'

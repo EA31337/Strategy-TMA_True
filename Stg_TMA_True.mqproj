@@ -620,14 +620,4 @@
       "relative_to_project":"true"
     }
   ],
-
-  "resources":
-  [
-    {
-      "type":"indicator",
-      "path":".\\Indicators\\TMA_True.ex5",
-      "name":"Indicators\\TMA_True.ex5",
-      "relative_to_project":"true"
-    }
-  ]
 }
