@@ -47,7 +47,7 @@ jobs:
           verbose: true
       - uses: actions/checkout@v2
         with:
-          path: indicators-other/Price/Include/EA31337-classes
+          path: indicators-other/Prices/Include/EA31337-classes
           ref: dev
           repository: EA31337/EA31337-classes
       - name: Compile strategy for MQL5
@@ -74,7 +74,7 @@ jobs:
     strategy:
       matrix:
         file:
-          - Price/TMA_True
+          - Prices/TMA_True
     steps:
       - uses: actions/checkout@v2
         with:
