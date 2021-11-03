@@ -104,14 +104,17 @@ class Stg_TMA_True : public Strategy {
       // Returns false when indicator data is not valid.
       return false;
     }
-    double lowest_price, highest_price;
-    double _change_pc = Math::ChangeInPct(_indi[1][(int)TMA_TRUE_MAIN], _indi[0][(int)TMA_TRUE_MAIN], true);
+    // double lowest_price, highest_price;
+    // double _change_pc = Math::ChangeInPct(_indi[1][(int)TMA_TRUE_MAIN], _indi[0][(int)TMA_TRUE_MAIN], true);
     switch (_cmd) {
       case ORDER_TYPE_BUY:
-        lowest_price = fmin3(_chart.GetLow(CURR), _chart.GetLow(PREV), _chart.GetLow(PPREV));
-        _result = (lowest_price < fmax3(_indi[_shift][(int)TMA_TRUE_LOWER], _indi[_shift + 1][(int)TMA_TRUE_LOWER],
-                                        _indi[_shift + 2][(int)TMA_TRUE_LOWER]));
-        _result &= _change_pc > _level;
+        // Close price was lower than the lower band.
+        _result &= _chart.GetClose(_shift + 1) < _indi[_shift][(int)TMA_TRUE_LOWER];
+        //_result &= _indi.IsIncByPct(_level, 0, (int)TMA_TRUE_MAIN, 2);
+
+        // lowest_price = fmin3(_chart.GetLow(CURR), _chart.GetLow(PREV), _chart.GetLow(PPREV));
+        // _result = (lowest_price < fmax3(_indi[_shift][(int)TMA_TRUE_LOWER], _indi[_shift + 1][(int)TMA_TRUE_LOWER], _indi[_shift + 2][(int)TMA_TRUE_LOWER]));
+        // _result &= _change_pc > _level;
         if (_method != 0) {
           if (METHOD(_method, 0))
             _result &= fmin(Close[_shift + 1], Close[_shift + 2]) < _indi[_shift][(int)TMA_TRUE_LOWER];
@@ -127,11 +130,13 @@ class Stg_TMA_True : public Strategy {
         }
         break;
       case ORDER_TYPE_SELL:
-        // Price value was higher than the upper band.
-        highest_price = fmin3(_chart.GetHigh(CURR), _chart.GetHigh(PREV), _chart.GetHigh(PPREV));
-        _result = (highest_price > fmin3(_indi[_shift][(int)TMA_TRUE_UPPER], _indi[_shift + 1][(int)TMA_TRUE_UPPER],
-                                         _indi[_shift + 2][(int)TMA_TRUE_UPPER]));
-        _result &= _change_pc < -_level;
+        // Close price was higher than the upper band.
+        _result &= _chart.GetClose(_shift + 1) > _indi[_shift][(int)TMA_TRUE_UPPER];
+        //_result &= _indi.IsDecByPct(-_level, 0, (int)TMA_TRUE_MAIN, 2);
+
+        // highest_price = fmin3(_chart.GetHigh(CURR), _chart.GetHigh(PREV), _chart.GetHigh(PPREV));
+        // _result = (highest_price > fmin3(_indi[_shift][(int)TMA_TRUE_UPPER], _indi[_shift + 1][(int)TMA_TRUE_UPPER], _indi[_shift + 2][(int)TMA_TRUE_UPPER]));
+        // _result &= _change_pc < -_level;
         if (_method != 0) {
           if (METHOD(_method, 0))
             _result &= fmin(Close[_shift + 1], Close[_shift + 2]) > _indi[_shift][(int)TMA_TRUE_UPPER];
