@@ -22,7 +22,7 @@ input bool Info_On_Chart = true;          // Display info on chart.
 
 // Defines.
 #define ea_name "Strategy TMA_True"
-#define ea_version "1.010"
+#define ea_version "1.011"
 #define ea_desc "Strategy based on EA31337 framework."
 #define ea_link "https://github.com/EA31337/Strategy-TMA_True"
 #define ea_author "EA31337 Ltd"
@@ -34,6 +34,7 @@ input bool Info_On_Chart = true;          // Display info on chart.
 #property description ea_desc
 #endif
 #property link ea_link
+#property version ea_version
 #ifdef __resource__
 #ifdef __MQL5__
 #property tester_indicator "::" + INDI_TMA_TRUE_PATH + "\\TMA_True.ex5"
