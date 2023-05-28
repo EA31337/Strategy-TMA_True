@@ -66,7 +66,7 @@ class Stg_TMA_True : public Strategy {
   Stg_TMA_True(StgParams &_sparams, TradeParams &_tparams, ChartParams &_cparams, string _name = "")
       : Strategy(_sparams, _tparams, _cparams, _name) {}
 
-  static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL) {
+  static Stg_TMA_True *Init(ENUM_TIMEFRAMES _tf = NULL, EA* _ea = NULL) {
     // Initialize strategy initial values.
     Stg_TMA_True_Params_Defaults stg_tmat_defaults;
     StgParams _stg_params(stg_tmat_defaults);
