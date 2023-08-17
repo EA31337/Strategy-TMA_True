@@ -113,7 +113,7 @@ class Stg_TMA_True : public Strategy {
         _result &= _indi.IsIncByPct(_level, TMA_TRUE_MAIN, _ishift, 3);
         break;
       case ORDER_TYPE_SELL:
-        _result &= _chart.GetLow(_ishift + 1) >= _indi[_ishift][(int)TMA_TRUE_UPPER];
+        _result &= _chart.GetHigh(_ishift + 1) >= _indi[_ishift][(int)TMA_TRUE_UPPER];
         _result &= _indi.IsDecreasing(1, TMA_TRUE_MAIN, _ishift);
         _result &= _indi.IsDecByPct(-_level, TMA_TRUE_MAIN, _ishift, 3);
         break;
