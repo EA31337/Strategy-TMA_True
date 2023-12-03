@@ -741,7 +741,7 @@
   [
     {
       "type":"indicator",
-      "path":"indicators-other\\PriceBands\\TMA_True.ex5",
+      "path":"indicators-other\\Price\\Range\\TMA_True.ex5",
       "name":"",
       "relative_to_project":true
     }

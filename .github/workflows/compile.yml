@@ -67,7 +67,7 @@ jobs:
     strategy:
       matrix:
         file:
-          - indicators-other/PriceBands/TMA_True
+          - indicators-other/Price/Range/TMA_True
     steps:
       - uses: actions/checkout@v2
         with:
